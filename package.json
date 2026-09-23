@@ -10,10 +10,21 @@
     "build:aab": "eas build -p android --profile production"
   },
   "dependencies": {
+    "@expo-google-fonts/courier-prime": "^0.4.1",
+    "@expo-google-fonts/literata": "^0.4.3",
+    "@expo-google-fonts/nunito-sans": "^0.4.2",
     "expo": "^57.0.0",
+    "expo-constants": "~57.0.19",
+    "expo-font": "~57.0.4",
+    "expo-linking": "~57.0.10",
+    "expo-router": "~57.0.22",
     "expo-status-bar": "~57.0.1",
+    "lucide-react-native": "^1.47.0",
     "react": "19.2.3",
-    "react-native": "0.86.3"
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0",
+    "react-native-svg": "15.15.4"
   },
   "devDependencies": {
     "@types/react": "~19.2.4",
