@@ -1,11 +1,12 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { Armchair, BookOpen, Check, ChevronDown, ChevronLeft, ChevronRight, EyeOff, MoreHorizontal, Plus, Share2 } from 'lucide-react-native';
+import { BookOpen, Check, ChevronDown, ChevronLeft, EyeOff, MoreHorizontal, Plus, Share2 } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
-import { Avatar, Card, Divider, Eyebrow, IconButton, ProgressBar, Segmented, Stars, T, Tag } from '../../src/components/ui';
+import { ClubCard, ProjectCard } from '../../src/components/cards';
+import { Avatar, Card, Divider, Eyebrow, IconButton, Segmented, Stars, T, Tag } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { useApi, useStore } from '../../src/data/store';
 import { colors, fonts, radius, type } from '../../src/theme';
@@ -177,20 +178,7 @@ export default function Livro() {
         <View style={s.section}>
           <Eyebrow>Clubes lendo este livro agora</Eyebrow>
           {d.clubs.map((c) => (
-            <Card key={c.id} style={[s.rowPad, { paddingHorizontal: 14, gap: 14 }]}>
-              <View style={[s.clubIcon, { backgroundColor: c.iconBg }]}>
-                <Armchair size={22} color={c.iconFg} />
-              </View>
-              <View style={{ flex: 1, gap: 2 }}>
-                <T style={type.title}>{c.name}</T>
-                <T style={type.small}>{c.desc}</T>
-                <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center', marginTop: 2 }}>
-                  {c.open ? <Tag label="porta aberta" tone="green" /> : null}
-                  <Text style={type.mono}>{c.meta}</Text>
-                </View>
-              </View>
-              <ChevronRight size={18} color={colors.muted} />
-            </Card>
+            <ClubCard key={c.id} club={c} />
           ))}
         </View>
 
@@ -198,17 +186,7 @@ export default function Livro() {
         {d.project ? (
           <View style={s.section}>
             <Eyebrow>Projeto relacionado</Eyebrow>
-            <Card style={{ padding: 14, gap: 8 }}>
-              <T style={type.title}>{d.project.name}</T>
-              <T style={type.small}>{d.project.desc}</T>
-              <ProgressBar pct={d.project.pct} />
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={type.mono}>{d.project.raised}</Text>
-                <Text style={type.mono}>
-                  {d.project.pct}% · {d.project.daysLeft}
-                </Text>
-              </View>
-            </Card>
+            <ProjectCard project={d.project} />
           </View>
         ) : null}
 
@@ -280,7 +258,6 @@ const s = StyleSheet.create({
   spoiler: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: colors.cream, borderRadius: radius.sm, padding: 18 },
   quote: { backgroundColor: colors.cream, borderRadius: radius.md, padding: 16, gap: 12 },
   quoteText: { fontFamily: fonts.serifItalic, fontSize: 18, lineHeight: 27, color: colors.ink },
-  clubIcon: { width: 48, height: 48, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   action: { position: 'absolute', left: 0, right: 0, bottom: 0, flexDirection: 'row', gap: 10, paddingHorizontal: 20, paddingTop: 12 },
   main: {
     flex: 1,

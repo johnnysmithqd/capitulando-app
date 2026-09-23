@@ -6,7 +6,26 @@ import * as api from './api';
 import { books } from './mock';
 import type { Book, Reading, ShelfStatus } from './types';
 
+export type Ordem = 'recentes' | 'nota' | 'titulo' | 'autor' | 'paginas';
+export interface EstanteFiltro {
+  genero: string;
+  notaMin: number;
+  ano: string;
+  ordem: Ordem;
+}
+export interface DiarioFiltro {
+  ano: string;
+  notaMin: number;
+  tipo: 'todas' | 'resenha' | 'releitura' | 'clube';
+}
+export const estanteFiltroPadrao: EstanteFiltro = { genero: 'todos', notaMin: 0, ano: 'todos', ordem: 'recentes' };
+export const diarioFiltroPadrao: DiarioFiltro = { ano: 'todos', notaMin: 0, tipo: 'todas' };
+
 interface Store {
+  estanteFiltro: EstanteFiltro;
+  setEstanteFiltro: (f: EstanteFiltro) => void;
+  diarioFiltro: DiarioFiltro;
+  setDiarioFiltro: (f: DiarioFiltro) => void;
   readings: Reading[];
   book: (id: string) => Book;
   reading: (bookId: string) => Reading | undefined;
@@ -19,6 +38,8 @@ const Ctx = createContext<Store | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [readings, setReadings] = useState<Reading[]>([]);
+  const [estanteFiltro, setEstanteFiltro] = useState(estanteFiltroPadrao);
+  const [diarioFiltro, setDiarioFiltro] = useState(diarioFiltroPadrao);
 
   useEffect(() => {
     api.getReadings().then(setReadings);
@@ -36,6 +57,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<Store>(
     () => ({
+      estanteFiltro,
+      setEstanteFiltro,
+      diarioFiltro,
+      setDiarioFiltro,
       readings,
       book: (id) => books[id] ?? books.memorias,
       reading: (bookId) => readings.find((r) => r.bookId === bookId),
@@ -50,7 +75,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         api.setShelfStatus(bookId, status);
       },
     }),
-    [readings, upsert],
+    [readings, upsert, estanteFiltro, diarioFiltro],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

@@ -5,8 +5,17 @@ import type {
   BookDetails,
   ClubPost,
   ClubSummary,
+  Conversation,
+  DiaryEntry,
   DiaryMonth,
+  FeedItem,
   List,
+  ListDetail,
+  Message,
+  Notice,
+  OtherProfile,
+  Person,
+  Recommendation,
   ProjectSummary,
   Reading,
   ShelfSummary,
@@ -53,6 +62,20 @@ export const books: Record<string, Book> = Object.fromEntries(
     b('esau', 'Esaú e Jacó', 'Machado de Assis', '#55463F'),
     b('ateneu', 'O Ateneu', 'Raul Pompeia', '#8C332B'),
     b('triste', 'Triste Fim de Policarpo Quaresma', 'Lima Barreto', '#3C5064'),
+    b('becos', 'Becos da Memória', 'Conceição Evaristo', '#3C5064'),
+    b('supridores', 'Os Supridores', 'José Falero', '#A8433A'),
+    b('gh', 'A Paixão Segundo G.H.', 'Clarice Lispector', '#4E4573'),
+    b('macunaima', 'Macunaíma', 'Mário de Andrade', '#7F3A22'),
+    b('solaris', 'Solaris', 'Stanisław Lem', '#2E3D4A'),
+    b('vento', 'O Nome do Vento', 'Patrick Rothfuss', '#453B24'),
+    b('capitaes', 'Capitães da Areia', 'Jorge Amado', '#3C5064'),
+    b('alquimista', 'O Alquimista', 'Paulo Coelho', '#98462A'),
+    b('potter', 'Harry Potter e a Pedra Filosofal', 'J.K. Rowling', '#8C332B'),
+    b('vidas', 'Vidas Secas', 'Graciliano Ramos', '#A8433A'),
+    b('cancao', 'Canção para Ninar Menino Grande', 'Conceição Evaristo', '#8C332B'),
+    b('onca', 'O Som do Rugido da Onça', 'Micheliny Verunschk', '#453B24'),
+    b('gados', 'De Gados e Homens', 'Ana Paula Maia', '#2F2A3E'),
+    b('insubmissas', 'Insubmissas Lágrimas de Mulheres', 'Conceição Evaristo', '#98462A'),
   ].map((x) => [x.id, x]),
 );
 
@@ -347,3 +370,140 @@ export const stats: Stats = {
 };
 
 export const searchCatalog: Book[] = [books.quincas, books['quincas-antofagica'], books.memorial];
+
+// ---- Fase 2
+
+export const people: Record<string, Person> = {
+  camila: { id: 'camila', name: 'Camila Ferraz', handle: 'camila.le', initials: 'CF', avatarBg: '#DCD3E8', avatarFg: '#4E4573', why: '3 livros em comum' },
+  tiago: { id: 'tiago', name: 'Tiago Bastos', handle: 'tiagob', initials: 'TB', avatarBg: '#F6D8CE', avatarFg: '#8E4A3C', why: 'ama Machado como você' },
+  luiza: { id: 'luiza', name: 'Luiza Prado', handle: 'luprado', initials: 'LP', avatarBg: '#F7E8B5', avatarFg: '#6F5410', why: 'conduz o Clube do Cortiço' },
+  rafael: { id: 'rafael', name: 'Rafael Nogueira', handle: 'rafa.lendo', initials: 'RN', avatarBg: '#CFE0D2', avatarFg: '#3D5A41', why: 'da sua cidade, Recife' },
+  helena: { id: 'helena', name: 'Helena Sá', handle: 'helena.sa', initials: 'HS', avatarBg: '#F7E8B5', avatarFg: '#6F5410' },
+};
+
+export const feed: FeedItem[] = [
+  {
+    id: 'f1',
+    kind: 'terminou',
+    who: people.tiago,
+    when: 'há 2 h',
+    book: { ...books.avesso, author: 'Jeferson Tenório' },
+    rating: 4,
+    text: 'Não sei ainda como falar disso sem chorar. Tenório escreve como quem acende a luz num quarto que a gente fingia não ver.',
+    likes: 24,
+    comments: 6,
+  },
+  {
+    id: 'f2',
+    kind: 'citacao',
+    who: people.camila,
+    when: 'há 5 h',
+    book: books.memorias,
+    quote: 'Marcela amou-me durante quinze meses e onze contos de réis; nada menos.',
+    page: 58,
+    likes: 41,
+    comments: 2,
+  },
+  { id: 'f3', kind: 'avancou', who: people.rafael, when: 'há 7 h', book: { ...books.sertao, pages: 608 }, page: 340, challenge: 'Setembro de 1.500 páginas · subiu para 2º', likes: 12, comments: 1 },
+  {
+    id: 'f4',
+    kind: 'resenha',
+    who: people.luiza,
+    when: 'ontem',
+    book: books.memorias,
+    rating: 5,
+    badge: 'releitura',
+    text: 'O capítulo das negativas é o melhor final de romance brasileiro. Não ter filhos, não transmitir a nenhuma criatura o legado da nossa miséria.',
+    spoilerPage: 240,
+    likes: 58,
+    comments: 14,
+  },
+  { id: 'f5', kind: 'sessao', club: 'Clube do Cortiço', day: '25', mon: 'SET', title: 'Capítulo 12 · O Cortiço', when: 'qui, 25 de setembro · 19h30 · on-line', confirmed: 24 },
+];
+
+export const forYou: Recommendation[] = [
+  { reason: 'Porque você deu 5★ a Torto Arado', book: { ...books.fogo, pages: 304 }, blurb: 'Mesmo autor, mesma Bahia, outra família. 3 pessoas que você segue leram.' },
+  { reason: 'Em alta entre quem você segue', book: { ...books.vista, pages: 128 }, blurb: 'Camila e Luiza terminaram esta semana. Curto — dá para ler em duas noites.' },
+];
+
+export const explore: { title: string; books: Book[] }[] = [
+  { title: 'Porque você deu 5★ a Torto Arado', books: ['fogo', 'defeito', 'becos', 'sol'].map((k) => books[k]) },
+  { title: 'Leitores com gosto parecido leram', books: ['vegetariana', 'vista', 'solitaria', 'supridores'].map((k) => books[k]) },
+  { title: 'Em alta entre quem você segue', books: ['gh', 'cidade', 'avesso', 'macunaima'].map((k) => books[k]) },
+  { title: 'Fora da sua bolha', books: ['solaris', 'kindred', 'vento', 'sapiens'].map((k) => books[k]) },
+];
+
+export const genres = ['Romance', 'Literatura brasileira', 'Não ficção', 'Poesia', 'Contos', 'Fantasia', 'Policial', 'Biografia', 'Ensaio', 'Quadrinhos', 'Ficção científica', 'Infantojuvenil'];
+export const onboardingBooks: Book[] = ['torto', 'casmurro', 'capitaes', 'despejo', 'alquimista', 'estrela', 'potter', 'sapiens', 'vidas'].map((k) => books[k]);
+export const suggestedPeople: Person[] = [people.camila, people.tiago, people.luiza, people.rafael];
+
+export const notices: Notice[] = [
+  { id: 'n1', group: 'hoje', kind: 'clube', initials: 'LP', who: 'Luiza Prado', text: 'respondeu você na discussão do capítulo 11 do Clube do Cortiço.', when: '14h', action: 'Responder', unread: true },
+  { id: 'n2', group: 'hoje', kind: 'clube', initials: 'CO', who: 'Clube do Cortiço', text: 'tem sessão hoje às 19h30 — o link abre 10 minutos antes.', when: '12h', action: 'Confirmar presença', unread: true },
+  { id: 'n3', group: 'hoje', kind: 'desafio', initials: 'TB', who: 'Tiago Bastos', text: 'passou você em Setembro de 1.500 páginas. Faltam 42 páginas para retomar o 2º.', when: '9h', unread: true },
+  { id: 'n4', group: 'hoje', kind: 'projeto', initials: 'EC', who: 'Estúdio Cubas', text: 'postou uma atualização no projeto que você apoia: Provas de cor aprovadas.', when: '8h', unread: true },
+  { id: 'n5', group: 'semana', kind: 'pessoa', initials: 'CF', who: 'Camila Ferraz', text: 'começou a seguir você.', when: 'ter', action: 'Seguir de volta', unread: true },
+  { id: 'n6', group: 'semana', kind: 'projeto', initials: 'CO', who: 'Correios', text: 'seu pacote de Memórias Póstumas em quadrinhos saiu para entrega em Recife.', when: 'ter', unread: true },
+  { id: 'n7', group: 'semana', kind: 'pessoa', initials: 'HS', who: 'Helena Sá', text: 'salvou sua lista Brasileiras que me formaram.', when: 'seg', unread: false },
+  { id: 'n8', group: 'semana', kind: 'clube', initials: 'LP', who: 'Luiza Prado', text: 'publicou no mural: material de leitura do capítulo 12.', when: 'seg', unread: false },
+  { id: 'n9', group: 'antes', kind: 'casa', initials: 'C', who: 'Capitulando', text: 'sua meta de 2026 está 2 livros à frente do calendário. Bom ritmo.', when: '12 set', unread: false },
+  { id: 'n10', group: 'antes', kind: 'pessoa', initials: 'RN', who: 'Rafael Nogueira', text: 'curtiu sua resenha de O Avesso da Pele.', when: '10 set', unread: false },
+];
+
+export const conversations: Conversation[] = [
+  { id: 'luiza', name: 'Luiza Prado', initials: 'LP', avatarBg: '#F7E8B5', avatarFg: '#6F5410', preview: 'Marina, você viu o material do 12?', when: '14h', unread: 2 },
+  { id: 'camila', name: 'Camila Ferraz', initials: 'CF', avatarBg: '#DCD3E8', avatarFg: '#4E4573', preview: 'kkkk eu também parei nessa parte', when: 'ontem', unread: 0 },
+  { id: 'tiago', name: 'Tiago Bastos', initials: 'TB', avatarBg: '#F6D8CE', avatarFg: '#8E4A3C', preview: 'vou levar a edição da Antofágica sábado', when: 'seg', unread: 0 },
+  { id: 'cortico', name: 'Clube do Cortiço · 24', initials: 'CO', avatarBg: '#F7E8B5', avatarFg: '#6F5410', preview: 'Helena: alguém tem o PDF do capítulo 12?', when: 'seg', unread: 0, group: true, muted: true },
+  { id: 'rafael', name: 'Rafael Nogueira', initials: 'RN', avatarBg: '#CFE0D2', avatarFg: '#3D5A41', preview: 'valeu pela indicação, comecei ontem', when: '12 set', unread: 0 },
+];
+
+export const messages: Message[] = [
+  { id: 'm1', text: 'Marina, você viu o material do 12? Subi no mural ontem à noite.', mine: false, time: '18h02' },
+  { id: 'm2', text: 'Vi! Já baixei. A parte sobre naturalismo é ótima — nunca tinha pensado no Aluísio assim.', mine: true, time: '18h10' },
+  { id: 'm3', text: 'Se sobrar tempo quinta, queria muito ouvir você sobre a Pombinha.', mine: false, time: '18h12' },
+];
+
+export const listDetail: ListDetail = {
+  id: 'l1',
+  name: 'Brasileiras que me formaram',
+  description:
+    'Comecei essa lista no ano em que li Carolina Maria de Jesus pela primeira vez. Não é cânone nem indicação de vestibular — é a ordem em que essas mulheres me pegaram.',
+  owner: 'marina.le',
+  isPublic: true,
+  saves: 86,
+  updated: '12 set',
+  items: [
+    { book: books.despejo, note: 'O começo de tudo. Um diário de catadora que escreve melhor que o país inteiro.' },
+    { book: books.estrela },
+    { book: books.poncia, note: 'Li em duas horas e levei dois anos para digerir.' },
+    { book: books.defeito },
+    { book: books.olhos, note: 'Se for ler uma só da Evaristo, que seja esta.' },
+    { book: books.becos },
+    { book: books.cancao },
+    { book: books.vista },
+    { book: books.solitaria, note: 'A mais nova da lista e já das mais importantes.' },
+    { book: books.onca },
+    { book: books.gados },
+    { book: books.insubmissas },
+  ],
+};
+
+export const otherProfile = (id: string): OtherProfile => ({
+  ...(people[id] ?? people.camila),
+  bio: 'Clarice em dias ruins. São Paulo.',
+  stats: { books: 212, followers: 1104, following: 308 },
+  inCommon: { count: 14, text: 'e vocês dois estão no Clube do Cortiço', covers: ['#4E4573', '#7F3A22', '#3D5A41'] },
+  favorites: ['gh', 'torto', 'despejo', 'kindred'].map((k) => books[k]),
+  reading: { book: books.cortico, chapter: 'cap. 13', pct: 68 },
+  diaryPrivate: true,
+});
+
+export const diaryEntry = (bookId: string): DiaryEntry => ({
+  book: books[bookId] ?? books.solitaria,
+  rating: 4,
+  finished: '14 de setembro de 2026',
+  days: 9,
+  kind: 'com resenha',
+  text: 'Cruz costura três séculos numa casa só, e nenhuma das mulheres é acessória da outra. Li os últimos capítulos de madrugada, sem querer.',
+});

@@ -21,7 +21,11 @@ app/                 telas (cada arquivo é uma rota)
   (tabs)/            abas: Início, Descobrir, Juntos, Perfil
   livro/[id].tsx     página do livro
   estante/[status]   estante (lendo, lido, quero-ler, abandonei)
-  registrar, progresso, detalhes, salvo, status, busca   folhas que sobem de baixo
+  pessoa/[id]        perfil de outra pessoa
+  lista/[id]         lista de livros
+  caixa, config, onboarding
+  registrar, progresso, detalhes, salvo, status, busca,
+  editar-perfil, entrada, filtrar, filtrar-diario, ordenar   folhas que sobem de baixo
 src/theme            cores, fontes, raios (tokens do protótipo)
 src/components       componentes reutilizáveis
 src/data/types.ts    modelos de dados
@@ -41,7 +45,9 @@ resposta para os tipos de `src/data/types.ts`. Autenticação e token podem fica
 
 1. **Leitura pessoal** (feito): Início, Registrar, Anotar páginas, Mais detalhes, Salvo, Status, Busca,
    Livro, Estante, Perfil (Sobre, Estantes, Clubes, Projetos, Diário, Estatísticas).
-2. Descobrir (feed), onboarding, perfil de outra pessoa, editar perfil, configurações, caixa de avisos.
+2. **Social e conta** (feito): Descobrir (Seguindo, Para você, Explorar), Onboarding (6 passos),
+   perfil de outra pessoa, Editar perfil, Configurações, Caixa (avisos, mensagens, conversa), Lista,
+   entrada do diário, filtros da estante e do diário, ordenação.
 3. Juntos: desafios, clubes, projetos, pódio, check-in, Estúdio de cards.
 4. Apoio, checkout, painéis do condutor.
 

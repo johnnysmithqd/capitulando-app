@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { ArrowUpDown, ChevronLeft, Search, SlidersHorizontal } from 'lucide-react-native';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -11,20 +11,25 @@ import type { ShelfStatus } from '../../src/data/types';
 import { colors, fonts, type } from '../../src/theme';
 
 const TITULO: Record<ShelfStatus, string> = { lendo: 'Lendo', lido: 'Lidos', 'quero-ler': 'Quero ler', abandonei: 'Abandonei' };
-const ORDENS = ['recentes', 'título', 'nota'] as const;
+const ORDEM_LABEL = { recentes: 'recentes', nota: 'nota', titulo: 'título', autor: 'autor', paginas: 'páginas' } as const;
 
 export default function Estante() {
   const { status = 'lido' } = useLocalSearchParams<{ status?: ShelfStatus }>();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
-  const { byStatus } = useStore();
-  const [ordem, setOrdem] = useState<(typeof ORDENS)[number]>('recentes');
+  const { byStatus, estanteFiltro: f } = useStore();
   const itens = useMemo(() => {
-    const list = byStatus(status);
-    if (ordem === 'título') return [...list].sort((a, b) => a.book.title.localeCompare(b.book.title));
-    if (ordem === 'nota') return [...list].sort((a, b) => (b.reading.rating ?? 0) - (a.reading.rating ?? 0));
-    return list;
-  }, [byStatus, status, ordem]);
+    const list = byStatus(status).filter((x) => (x.reading.rating ?? 0) >= f.notaMin);
+    const by = {
+      recentes: () => 0,
+      nota: (a: (typeof list)[0], b: (typeof list)[0]) => (b.reading.rating ?? 0) - (a.reading.rating ?? 0),
+      titulo: (a: (typeof list)[0], b: (typeof list)[0]) => a.book.title.localeCompare(b.book.title),
+      autor: (a: (typeof list)[0], b: (typeof list)[0]) => a.book.author.localeCompare(b.book.author),
+      paginas: (a: (typeof list)[0], b: (typeof list)[0]) => b.book.pages - a.book.pages,
+    }[f.ordem];
+    return [...list].sort(by);
+  }, [byStatus, status, f]);
+  const filtrando = f.notaMin > 0 || f.genero !== 'todos' || f.ano !== 'todos';
   const col = (width - 40 - 24) / 3;
 
   return (
@@ -44,12 +49,8 @@ export default function Estante() {
         </Pressable>
       </View>
       <View style={s.filters}>
-        <Chip label="Filtrar" icon={<SlidersHorizontal size={16} color={colors.ink} />} />
-        <Chip
-          label={ordem}
-          icon={<ArrowUpDown size={16} color={colors.ink} />}
-          onPress={() => setOrdem(ORDENS[(ORDENS.indexOf(ordem) + 1) % ORDENS.length])}
-        />
+        <Chip label="Filtrar" active={filtrando} icon={<SlidersHorizontal size={16} color={colors.ink} />} onPress={() => router.push('/filtrar')} />
+        <Chip label={ORDEM_LABEL[f.ordem]} icon={<ArrowUpDown size={16} color={colors.ink} />} onPress={() => router.push('/ordenar')} />
       </View>
       <FlatList
         data={itens}

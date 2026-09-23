@@ -34,7 +34,7 @@ export default function Inicio() {
             {saudacao(now.getHours())}, {me?.name.split(' ')[0] ?? ''}
           </Text>
         </View>
-        <Pressable style={s.bell} accessibilityLabel="Avisos e mensagens">
+        <Pressable style={s.bell} accessibilityLabel="Avisos e mensagens" onPress={() => router.push('/caixa')}>
           <Bell size={22} color={colors.ink} />
           {home?.unreadNotices ? (
             <View style={s.badge}>
@@ -47,7 +47,7 @@ export default function Inicio() {
       {/* Hoje */}
       {home?.agenda.length ? (
         <View>
-          <SectionHeader title={`Hoje · ${home.agenda.length} compromissos`} action="avisos" />
+          <SectionHeader title={`Hoje · ${home.agenda.length} compromissos`} action="avisos" onAction={() => router.push('/caixa')} />
           <View style={s.agenda}>
             {home.agenda.map((a, i) => (
               <View key={a.id}>

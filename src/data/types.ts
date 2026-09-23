@@ -152,3 +152,89 @@ export interface List {
   meta: string;
   private?: boolean;
 }
+
+// ---- Fase 2
+
+export interface Person {
+  id: string;
+  name: string;
+  handle: string;
+  initials: string;
+  avatarBg: string;
+  avatarFg: string;
+  why?: string; // motivo da sugestão
+}
+
+export type FeedItem =
+  | { id: string; kind: 'terminou'; who: Person; when: string; book: Book; rating: number; text: string; likes: number; comments: number }
+  | { id: string; kind: 'citacao'; who: Person; when: string; book: Book; quote: string; page: number; likes: number; comments: number }
+  | { id: string; kind: 'avancou'; who: Person; when: string; book: Book; page: number; challenge?: string; likes: number; comments: number }
+  | { id: string; kind: 'resenha'; who: Person; when: string; book: Book; rating: number; badge?: string; text: string; spoilerPage?: number; likes: number; comments: number }
+  | { id: string; kind: 'sessao'; club: string; day: string; mon: string; title: string; when: string; confirmed: number };
+
+export interface Recommendation {
+  reason: string;
+  book: Book;
+  blurb: string;
+}
+
+export interface Notice {
+  id: string;
+  group: 'hoje' | 'semana' | 'antes';
+  kind: 'clube' | 'desafio' | 'projeto' | 'pessoa' | 'casa';
+  initials: string;
+  who: string;
+  text: string;
+  when: string;
+  action?: string;
+  unread: boolean;
+}
+
+export interface Conversation {
+  id: string;
+  name: string;
+  initials: string;
+  avatarBg: string;
+  avatarFg: string;
+  preview: string;
+  when: string;
+  unread: number;
+  group?: boolean;
+  muted?: boolean;
+}
+
+export interface Message {
+  id: string;
+  text: string;
+  mine: boolean;
+  time: string;
+}
+
+export interface ListDetail {
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  isPublic: boolean;
+  saves: number;
+  updated: string;
+  items: { book: Book; note?: string }[];
+}
+
+export interface OtherProfile extends Person {
+  bio: string;
+  stats: { books: number; followers: number; following: number };
+  inCommon: { count: number; text: string; covers: string[] };
+  favorites: Book[];
+  reading: { book: Book; chapter: string; pct: number };
+  diaryPrivate: boolean;
+}
+
+export interface DiaryEntry {
+  book: Book;
+  rating: number;
+  finished: string;
+  days: number;
+  kind?: string;
+  text?: string;
+}

@@ -22,7 +22,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BookCover } from '../../src/components/BookCover';
 import { Avatar, Card, Chip, Divider, Eyebrow, ProgressBar, SectionHeader, Stars, T, Tag } from '../../src/components/ui';
 import * as api from '../../src/data/api';
-import { useApi } from '../../src/data/store';
+import { filtrarDiario } from '../../src/data/filtros';
+import { diarioFiltroPadrao, useApi, useStore } from '../../src/data/store';
 import type { User } from '../../src/data/types';
 import { colors, fonts, radius, type } from '../../src/theme';
 
@@ -111,14 +112,14 @@ function Header({ me, top }: { me: User; top: number }) {
     <View>
       <View style={[s.cover, { paddingTop: top }]}>
         <View style={[s.coverActions, { top: top + 8 }]}>
-          <Pressable style={s.pill}>
+          <Pressable style={s.pill} onPress={() => router.push('/editar-perfil')}>
             <PencilLine size={16} color={colors.ink} />
             <Text style={s.pillText}>Editar perfil</Text>
           </Pressable>
           <Pressable style={s.round} accessibilityLabel="Compartilhar perfil" onPress={() => Share.share({ message: `@${me.handle} no Capitulando` })}>
             <Share2 size={18} color={colors.ink} />
           </Pressable>
-          <Pressable style={s.round} accessibilityLabel="Configurações">
+          <Pressable style={s.round} accessibilityLabel="Configurações" onPress={() => router.push('/config')}>
             <Settings size={18} color={colors.ink} />
           </Pressable>
         </View>
@@ -219,7 +220,7 @@ function Estantes({ p }: { p: Profile }) {
           {p.lists.map((l, i) => (
             <View key={l.id}>
               {i > 0 ? <Divider /> : null}
-              <Pressable style={s.row}>
+              <Pressable style={s.row} onPress={() => router.push(`/lista/${l.id}`)}>
                 <GripVertical size={16} color={colors.lineStrong} />
                 <View style={{ flex: 1 }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
@@ -271,18 +272,22 @@ function IconBox({ bg, icon }: { bg: string; icon: ReactNode }) {
 }
 
 function Diario({ p }: { p: Profile }) {
+  const { diarioFiltro } = useStore();
+  const meses = filtrarDiario(p.diary, diarioFiltro);
+  const ativo = JSON.stringify(diarioFiltro) !== JSON.stringify(diarioFiltroPadrao);
   return (
     <View style={{ paddingHorizontal: 20, gap: 14 }}>
       <View style={{ flexDirection: 'row' }}>
-        <Chip label="Filtrar" icon={<SlidersHorizontal size={16} color={colors.ink} />} />
+        <Chip label="Filtrar" active={ativo} icon={<SlidersHorizontal size={16} color={colors.ink} />} onPress={() => router.push('/filtrar-diario')} />
       </View>
-      {p.diary.map((m) => (
+      {meses.length === 0 ? <T style={type.small}>Nenhuma entrada com esses filtros.</T> : null}
+      {meses.map((m) => (
         <View key={m.month}>
           <Eyebrow style={{ marginBottom: 4 }}>{m.month}</Eyebrow>
           {m.items.map((it, i) => (
             <View key={it.book.id + it.day}>
               {i > 0 ? <Divider /> : null}
-              <Pressable style={s.row} onPress={() => router.push(`/livro/${it.book.id}`)}>
+              <Pressable style={s.row} onPress={() => router.push({ pathname: '/entrada', params: { id: it.book.id } })}>
                 <View style={s.date}>
                   <Text style={s.dateDay}>{it.day}</Text>
                   <Text style={s.dateMon}>{it.mon}</Text>
@@ -337,10 +342,10 @@ function Estatisticas({ p }: { p: Profile }) {
           label="Nota média"
           big={String(st.avgRating).replace('.', ',')}
           extra={<Text style={{ color: colors.gold, fontSize: 14 }}> ★</Text>}
-          sub={`você é generosa: média da casa ${String(st.communityAvg).replace('.', ',')}`}
+          sub={`média da casa: ${String(st.communityAvg).replace('.', ',')}`}
         />
         <StatCard label="Sequência" big={String(st.streak)} extra={<Flame size={18} color={colors.ink} />} sub={`dias lendo · recorde ${st.streakRecord}`} />
-        <StatCard label="Autora do ano" title={st.authorOfYear.name} sub={st.authorOfYear.sub} />
+        <StatCard label="Autor(a) do ano" title={st.authorOfYear.name} sub={st.authorOfYear.sub} />
       </View>
       <Card style={{ padding: 14, gap: 10 }}>
         <T style={[type.title, { fontFamily: fonts.sansSemi }]}>Gêneros</T>

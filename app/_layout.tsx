@@ -46,12 +46,22 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="livro/[id]" />
           <Stack.Screen name="estante/[status]" />
+          <Stack.Screen name="pessoa/[id]" />
+          <Stack.Screen name="lista/[id]" />
+          <Stack.Screen name="config" />
+          <Stack.Screen name="caixa" />
+          <Stack.Screen name="onboarding" options={{ animation: 'fade', gestureEnabled: false }} />
           <Stack.Screen name="registrar" options={sheet} />
           <Stack.Screen name="busca" options={sheet} />
           <Stack.Screen name="status" options={sheet} />
           <Stack.Screen name="progresso" options={sheet} />
           <Stack.Screen name="detalhes" options={sheet} />
           <Stack.Screen name="salvo" options={sheet} />
+          <Stack.Screen name="editar-perfil" options={sheet} />
+          <Stack.Screen name="entrada" options={sheet} />
+          <Stack.Screen name="filtrar" options={sheet} />
+          <Stack.Screen name="filtrar-diario" options={sheet} />
+          <Stack.Screen name="ordenar" options={sheet} />
         </Stack>
       </StoreProvider>
     </SafeAreaProvider>

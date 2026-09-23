@@ -55,4 +55,58 @@ export const getProfile = () =>
     favorites: ['torto', 'despejo', 'estrela', 'vista'].map((id) => mock.books[id]),
   });
 
+// ---- Descobrir
+export const getFeed = () => delay(mock.feed);
+export const getForYou = () => delay(mock.forYou);
+export const getExplore = () => delay({ rows: mock.explore, clubs: mock.clubs, projects: mock.projects });
+
+// ---- Onboarding
+export const getOnboarding = () => delay({ genres: mock.genres, books: mock.onboardingBooks, people: mock.suggestedPeople });
+export interface OnboardingResult {
+  genres: string[];
+  ratings: Record<string, number>;
+  follows: string[];
+  yearGoal?: number;
+}
+export const finishOnboarding = (r: OnboardingResult) => delay(r);
+
+// ---- Pessoas
+export const getPerson = (id: string) => delay(mock.otherProfile(id));
+export const follow = (personId: string, on: boolean) => delay({ personId, on });
+
+// ---- Caixa (avisos e mensagens)
+export const getNotices = () => delay(mock.notices);
+export const markNoticesRead = (ids: string[]) => delay(ids);
+export const getConversations = () => delay(mock.conversations);
+export const getMessages = (conversationId: string) => delay(conversationId ? mock.messages : []);
+export const sendMessage = (conversationId: string, text: string) => delay({ conversationId, text });
+
+// ---- Listas e diário
+export const getList = (id: string) => delay({ ...mock.listDetail, id });
+export const getDiaryEntry = (bookId: string) => delay(mock.diaryEntry(bookId));
+
+// ---- Conta
+export interface ProfileUpdate {
+  name: string;
+  handle: string;
+  bio: string;
+  favorites: string[];
+}
+export const updateProfile = (u: ProfileUpdate) => delay(u);
+export interface Settings {
+  publicProfile: boolean;
+  diaryVisibility: 'todos' | 'seguidores' | 'eu';
+  spoilerVeil: boolean;
+  notify: { clubes: boolean; desafios: boolean; projetos: boolean; resumo: boolean };
+}
+export const getSettings = () =>
+  delay<Settings>({
+    publicProfile: true,
+    diaryVisibility: 'seguidores',
+    spoilerVeil: true,
+    notify: { clubes: true, desafios: true, projetos: false, resumo: true },
+  });
+export const saveSettings = (s: Settings) => delay(s);
+export const logout = () => delay(true);
+
 export type { Reading };
