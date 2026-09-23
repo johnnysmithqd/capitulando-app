@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Capitulando",
+    "slug": "capitulando",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.capitulando.app",
+      "versionCode": 1,
+      "edgeToEdgeEnabled": true
+    }
+  }
+}
