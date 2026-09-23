@@ -348,7 +348,7 @@ function Explorar() {
             <Text style={s.link}>filtrar</Text>
           </View>
           {data.clubs.map((c) => (
-            <ClubCard key={c.id} club={c} />
+            <ClubCard key={c.id} club={c} onPress={() => router.push(`/clube/${c.id}`)} />
           ))}
         </View>
       ) : null}
@@ -357,7 +357,7 @@ function Explorar() {
         <View style={{ paddingHorizontal: 20, gap: 10 }}>
           <Text style={type.h2}>Projetos para você</Text>
           {data.projects.map((p) => (
-            <ProjectCard key={p.id} project={p} />
+            <ProjectCard key={p.id} project={p} onPress={() => router.push(`/projeto/${p.id}`)} />
           ))}
         </View>
       ) : null}

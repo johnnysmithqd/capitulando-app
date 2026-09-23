@@ -64,7 +64,7 @@ export default function Inicio() {
                     </T>
                   </View>
                   {a.action ? (
-                    <Pressable style={s.enter}>
+                    <Pressable style={s.enter} onPress={() => router.push('/sala-clube/cortico')}>
                       <Text style={s.enterText}>{a.action}</Text>
                     </Pressable>
                   ) : (
@@ -162,12 +162,12 @@ export default function Inicio() {
       {/* Do seu clube */}
       {home ? (
         <View>
-          <SectionHeader title="Do seu clube" action="ver mural" />
+          <SectionHeader title="Do seu clube" action="ver mural" onAction={() => router.push('/sala-clube/cortico')} />
           <Card style={{ marginHorizontal: 20, paddingHorizontal: 14 }}>
             {home.clubFeed.map((p, i) => (
               <View key={p.id}>
                 {i > 0 ? <Divider /> : null}
-                <Pressable style={s.post}>
+                <Pressable style={s.post} onPress={() => router.push('/sala-clube/cortico')}>
                   {p.kind === 'enquete' ? (
                     <View style={[s.postIcon, { backgroundColor: colors.cream }]}>
                       <ListChecks size={18} color={colors.ink} />

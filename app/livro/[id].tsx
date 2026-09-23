@@ -178,7 +178,7 @@ export default function Livro() {
         <View style={s.section}>
           <Eyebrow>Clubes lendo este livro agora</Eyebrow>
           {d.clubs.map((c) => (
-            <ClubCard key={c.id} club={c} />
+            <ClubCard key={c.id} club={c} onPress={() => router.push(`/clube/${c.id}`)} />
           ))}
         </View>
 
@@ -186,7 +186,7 @@ export default function Livro() {
         {d.project ? (
           <View style={s.section}>
             <Eyebrow>Projeto relacionado</Eyebrow>
-            <ProjectCard project={d.project} />
+            <ProjectCard project={d.project} onPress={() => router.push(`/projeto/${d.project!.id}`)} />
           </View>
         ) : null}
 
