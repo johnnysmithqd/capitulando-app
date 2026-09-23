@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
 import { ClubCard, ProjectCard } from '../../src/components/cards';
+import { menu } from '../../src/components/menu';
 import { Avatar, Card, Divider, Eyebrow, IconButton, Segmented, Stars, T, Tag } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { useApi, useStore } from '../../src/data/store';
@@ -36,7 +37,17 @@ export default function Livro() {
           <IconButton label="Compartilhar" onPress={() => Share.share({ message: `${book.title}, de ${book.author} — no Capitulando` })}>
             <Share2 size={20} color={colors.ink} />
           </IconButton>
-          <IconButton label="Mais opções">
+          <IconButton
+            label="Mais opções"
+            onPress={() =>
+              menu(book.title, [
+                { label: 'Adicionar a uma lista', onPress: () => router.push('/lista/l1') },
+                { label: 'Fazer um card', onPress: () => router.push({ pathname: '/estudio', params: { tipo: 'progresso', id } }) },
+                { label: reading ? 'Trocar status' : 'Pôr na estante', onPress: () => router.push({ pathname: reading ? '/trocar' : '/status', params: { id } }) },
+                { label: 'Informar erro na ficha', onPress: () => Share.share({ message: `Erro na ficha de ${book.title}` }) },
+              ])
+            }
+          >
             <MoreHorizontal size={22} color={colors.ink} />
           </IconButton>
         </View>

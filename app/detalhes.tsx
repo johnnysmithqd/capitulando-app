@@ -3,6 +3,7 @@ import { Camera, Globe, Lock, Quote } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 
+import { precisaDoAparelho } from '../src/components/menu';
 import { Sheet } from '../src/components/Sheet';
 import { Button, Eyebrow, Segmented, T } from '../src/components/ui';
 import * as api from '../src/data/api';
@@ -20,6 +21,8 @@ export default function Detalhes() {
   const [spoiler, setSpoiler] = useState(true);
   const [tags, setTags] = useState(['literatura brasileira', 'clássico']);
   const [visib, setVisib] = useState<'publico' | 'eu'>('publico');
+  const [citacao, setCitacao] = useState<string | null>(null);
+  const [novaTag, setNovaTag] = useState<string | null>(null);
   const lastTap = useRef<{ i: number; t: number }>({ i: 0, t: 0 });
   const hoje = new Date();
 
@@ -32,7 +35,7 @@ export default function Detalhes() {
   };
 
   const salvar = () => {
-    api.saveReadingDetails({ bookId: id, rating: nota || undefined, review: resenha || undefined, spoiler, tags, isPublic: visib === 'publico' });
+    api.saveReadingDetails({ bookId: id, rating: nota || undefined, review: resenha || undefined, quote: citacao?.trim() || undefined, spoiler, tags, isPublic: visib === 'publico' });
     if (terminei) store.setStatus(id, 'lido');
     router.replace({ pathname: '/salvo', params: { id, tipo: terminei ? 'lido' : 'progresso' } });
   };
@@ -79,15 +82,27 @@ export default function Detalhes() {
 
         <Eyebrow style={s.gap}>Citação</Eyebrow>
         <View style={{ flexDirection: 'row', gap: 8 }}>
-          <Pressable style={s.outline}>
+          <Pressable style={s.outline} onPress={() => setCitacao(citacao === null ? '' : citacao)}>
             <Quote size={18} color={colors.ink} />
             <Text style={s.outlineText}>Digitar</Text>
           </Pressable>
-          <Pressable style={s.outline}>
+          <Pressable style={s.outline} onPress={() => precisaDoAparelho('Foto da página')}>
             <Camera size={18} color={colors.ink} />
             <Text style={s.outlineText}>Foto da página</Text>
           </Pressable>
         </View>
+
+        {citacao !== null ? (
+          <TextInput
+            value={citacao}
+            onChangeText={setCitacao}
+            autoFocus
+            multiline
+            placeholder="Copie o trecho que marcou você"
+            placeholderTextColor={colors.faint}
+            style={[s.input, { minHeight: 72, fontFamily: fonts.serifItalic }]}
+          />
+        ) : null}
 
         <Eyebrow style={s.gap}>Tags</Eyebrow>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
@@ -96,9 +111,27 @@ export default function Detalhes() {
               <Text style={s.tagText}>{t}</Text>
             </Pressable>
           ))}
-          <Pressable style={[s.tag, { backgroundColor: colors.cream }]}>
-            <Text style={[s.tagText, { color: colors.ink }]}>+ tag</Text>
-          </Pressable>
+          {novaTag !== null ? (
+            <TextInput
+              value={novaTag}
+              onChangeText={setNovaTag}
+              autoFocus
+              autoCapitalize="none"
+              placeholder="nova tag"
+              placeholderTextColor={colors.faint}
+              onSubmitEditing={() => {
+                const t = novaTag.trim().toLowerCase();
+                if (t && !tags.includes(t)) setTags([...tags, t]);
+                setNovaTag(null);
+              }}
+              onBlur={() => setNovaTag(null)}
+              style={[s.tag, s.tagInput]}
+            />
+          ) : (
+            <Pressable style={[s.tag, { backgroundColor: colors.cream }]} onPress={() => setNovaTag('')}>
+              <Text style={[s.tagText, { color: colors.ink }]}>+ tag</Text>
+            </Pressable>
+          )}
         </View>
 
         <View style={[s.row, s.gap]}>
@@ -162,4 +195,5 @@ const s = StyleSheet.create({
   outlineText: { fontFamily: fonts.sansSemi, fontSize: 14, color: colors.ink },
   tag: { backgroundColor: colors.accentSoft, borderRadius: radius.pill, paddingHorizontal: 12, height: 32, justifyContent: 'center' },
   tagText: { fontFamily: fonts.sansMedium, fontSize: 13, color: colors.accentDark },
+  tagInput: { backgroundColor: colors.paper, borderWidth: 1, borderColor: colors.accentLine, minWidth: 110, fontFamily: fonts.sansMedium, fontSize: 13, color: colors.ink, paddingVertical: 0 },
 });

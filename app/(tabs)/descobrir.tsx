@@ -101,7 +101,7 @@ function Post({ item }: { item: FeedItem }) {
             <T style={type.small}>{item.confirmed} confirmaram</T>
           </View>
         </View>
-        <Button label="Confirmar presença" variant="outline" small={false} style={{ height: 44 }} />
+        <Button label="Confirmar presença" variant="outline" style={{ height: 44 }} onPress={() => router.push({ pathname: '/rsvp', params: { clube: 'cortico' } })} />
       </Card>
     );
   }

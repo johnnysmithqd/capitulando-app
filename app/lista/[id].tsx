@@ -5,6 +5,7 @@ import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
+import { menu } from '../../src/components/menu';
 import { Avatar, Button, Divider, Eyebrow, IconButton, T } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { useApi } from '../../src/data/store';
@@ -42,7 +43,16 @@ export default function Lista() {
           <IconButton label="Compartilhar" onPress={() => Share.share({ message: `${l.name} — lista de @${l.owner} no Capitulando` })}>
             <Share2 size={20} color={colors.ink} />
           </IconButton>
-          <IconButton label="Mais opções">
+          <IconButton
+            label="Mais opções"
+            onPress={() =>
+              menu(l.name, [
+                { label: reordenando ? 'Terminar de reordenar' : 'Reordenar', onPress: () => setReordenando(!reordenando) },
+                { label: 'Copiar link', onPress: () => Share.share({ message: `https://capitulando.com/@${l.owner}/listas/${l.id}` }) },
+                { label: 'Apagar lista', destrutiva: true, onPress: () => router.back() },
+              ])
+            }
+          >
             <MoreHorizontal size={22} color={colors.ink} />
           </IconButton>
         </View>

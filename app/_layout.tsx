@@ -81,6 +81,8 @@ export default function RootLayout() {
           <Stack.Screen name="nova-enquete" options={sheet} />
           <Stack.Screen name="avisar" options={sheet} />
           <Stack.Screen name="trocar" options={sheet} />
+          <Stack.Screen name="escolher-livro" options={sheet} />
+          <Stack.Screen name="assinaturas" />
           <Stack.Screen name="apoio/[id]" />
           <Stack.Screen name="painel-clube/[id]" />
           <Stack.Screen name="painel-projeto/[id]" />

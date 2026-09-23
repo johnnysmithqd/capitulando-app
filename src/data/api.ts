@@ -19,6 +19,7 @@ export interface ReadingDetails {
   bookId: string;
   rating?: number;
   review?: string;
+  quote?: string;
   spoiler: boolean;
   tags: string[];
   isPublic: boolean;

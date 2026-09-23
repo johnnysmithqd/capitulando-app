@@ -13,11 +13,17 @@ export default function Registrar() {
   const { byStatus } = useStore();
   const lendo = byStatus('lendo');
   const atual = lendo[0]?.book;
+  // Com mais de um livro em curso, pergunta qual antes de abrir a folha.
+  const abrir = (para: 'progresso' | 'detalhes') => {
+    if (!atual) return router.replace('/busca');
+    if (lendo.length > 1) return router.replace({ pathname: '/escolher-livro', params: { para } });
+    router.replace(para === 'detalhes' ? { pathname: '/detalhes', params: { id: atual.id, terminei: '1' } } : { pathname: '/progresso', params: { id: atual.id } });
+  };
 
   return (
     <Sheet title="O que você quer fazer?">
       <ScrollView contentContainerStyle={{ paddingHorizontal: 20, gap: 14, paddingBottom: 8 }}>
-        <Pressable style={s.session} onPress={() => atual && router.replace({ pathname: '/progresso', params: { id: atual.id } })}>
+        <Pressable style={s.session} onPress={() => abrir('progresso')}>
           <Timer size={22} color={colors.paper} />
           <View style={{ flex: 1 }}>
             <Text style={s.sessionTitle}>Iniciar sessão de leitura</Text>
@@ -40,7 +46,7 @@ export default function Registrar() {
           </View>
           <Pressable
             style={s.pagesBtn}
-            onPress={() => atual && router.replace({ pathname: '/progresso', params: { id: atual.id } })}
+            onPress={() => abrir('progresso')}
           >
             <Text style={s.pagesBtnText}>+ páginas</Text>
           </Pressable>
@@ -60,7 +66,7 @@ export default function Registrar() {
             icon={<BookCheck size={20} color={colors.ink} />}
             title="Terminei um livro"
             sub="nota, resenha e estante"
-            onPress={() => atual && router.replace({ pathname: '/detalhes', params: { id: atual.id, terminei: '1' } })}
+            onPress={() => abrir('detalhes')}
           />
         </View>
 

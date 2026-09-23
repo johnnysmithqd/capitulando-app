@@ -25,11 +25,11 @@ const TOM_ONDE = {
 
 // Painel de quem conduz o clube: membros, repasses, sessões e enquetes.
 export default function PainelClube() {
-  const { id = 'sarau' } = useLocalSearchParams<{ id?: string }>();
+  const { id = 'sarau', aba: abaInicial } = useLocalSearchParams<{ id?: string; aba?: Aba }>();
   const insets = useSafeAreaInsets();
   const loaded = useApi(() => api.getPainelClube(id), [id]);
   const [p, setP] = useState<api.PainelClube | null>(null);
-  const [aba, setAba] = useState<Aba>('membros');
+  const [aba, setAba] = useState<Aba>(ABAS.some((a) => a.id === abaInicial) ? (abaInicial as Aba) : 'membros');
   const [aviso, avisar] = useAviso();
   useEffect(() => {
     if (loaded) setP(loaded);

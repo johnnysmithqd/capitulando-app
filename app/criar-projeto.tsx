@@ -3,7 +3,7 @@ import { Check, Image as ImageIcon, Plus, Receipt, Truck } from 'lucide-react-na
 import { useState } from 'react';
 import { Alert, Pressable, StyleSheet, Switch, Text, View } from 'react-native';
 
-import { emBreve } from '../src/components/emBreve';
+import { precisaDoAparelho } from '../src/components/menu';
 import { brl, Campo, Entrada, Opcao, Passo, Passos, passoStyles as ps } from '../src/components/passos';
 import { ProgressBar } from '../src/components/ui';
 import * as api from '../src/data/api';
@@ -25,6 +25,17 @@ function Fluxo({ setup }: { setup: ProjectSetup }) {
   const [step, setStep] = useState(1);
   const [d, setD] = useState<ProjectDraft>(setup.draft);
   const [busy, setBusy] = useState(false);
+  const [nova, setNova] = useState<{ title: string; price: string; physical: boolean } | null>(null);
+  const addRecompensa = () => {
+    if (!nova) return;
+    const price = Number(nova.price.replace(',', '.'));
+    if (!nova.title.trim() || !(price > 0)) return;
+    set('rewards', [
+      ...d.rewards,
+      { id: `r${Date.now()}`, title: nova.title.trim(), price, physical: nova.physical, details: nova.physical ? 'Correios · entrega a combinar' : 'digital' },
+    ]);
+    setNova(null);
+  };
   const set = <K extends keyof ProjectDraft>(k: K, v: ProjectDraft[K]) => setD((x) => ({ ...x, [k]: v }));
 
   const back = () => (step === 1 ? router.back() : setStep(step - 1));
@@ -52,7 +63,7 @@ function Fluxo({ setup }: { setup: ProjectSetup }) {
     >
       {step === 1 && (
         <Passo gap={16} title="Conte a história" sub="O que você quer fazer, por que agora, e o que volta para quem apoia. Uns 10 minutos até publicar.">
-          <Pressable style={s.capa} accessibilityLabel="Imagem de capa">
+          <Pressable style={s.capa} accessibilityLabel="Imagem de capa" onPress={() => precisaDoAparelho('Imagem de capa')}>
             <ImageIcon size={26} color={colors.ink} style={{ opacity: 0.5 }} />
             <Text style={s.capaTitle}>Imagem de capa · 16:9</Text>
             <Text style={[ps.note, { color: colors.faint }]}>foto, arte ou o próprio livro</Text>
@@ -131,10 +142,38 @@ function Fluxo({ setup }: { setup: ProjectSetup }) {
               <Text style={ps.small}>{r.details}</Text>
             </View>
           ))}
-          <Pressable style={s.outra} onPress={() => emBreve('Nova recompensa')}>
-            <Plus size={18} color={colors.ink} style={{ opacity: 0.6 }} />
-            <Text style={s.outraText}>Outra recompensa</Text>
-          </Pressable>
+          {nova ? (
+            <View style={[ps.boxed, { padding: 14, gap: 10 }]}>
+              <Campo label="Nome da recompensa">
+                <Entrada value={nova.title} onChangeText={(t) => setNova({ ...nova, title: t })} placeholder="Livro + marcador" autoFocus />
+              </Campo>
+              <Campo label="Valor (R$)">
+                <Entrada value={nova.price} onChangeText={(t) => setNova({ ...nova, price: t.replace(/[^\d,]/g, '') })} placeholder="80" keyboardType="numeric" />
+              </Campo>
+              <Pressable style={s.toggleRow} onPress={() => setNova({ ...nova, physical: !nova.physical })}>
+                <Switch
+                  value={nova.physical}
+                  onValueChange={(v) => setNova({ ...nova, physical: v })}
+                  trackColor={{ true: colors.accent, false: colors.lineStrong }}
+                  thumbColor={colors.paper}
+                />
+                <Text style={s.toggleTitle}>Tem entrega física</Text>
+              </Pressable>
+              <View style={{ flexDirection: 'row', gap: 8 }}>
+                <Pressable style={[s.outra, { flex: 1 }]} onPress={() => setNova(null)}>
+                  <Text style={s.outraText}>Cancelar</Text>
+                </Pressable>
+                <Pressable style={[s.outra, { flex: 1, backgroundColor: colors.accentSoft, borderColor: colors.accentLine }]} onPress={addRecompensa}>
+                  <Text style={[s.outraText, { color: colors.accentDark }]}>Adicionar</Text>
+                </Pressable>
+              </View>
+            </View>
+          ) : (
+            <Pressable style={s.outra} onPress={() => setNova({ title: '', price: '', physical: false })}>
+              <Plus size={18} color={colors.ink} style={{ opacity: 0.6 }} />
+              <Text style={s.outraText}>Outra recompensa</Text>
+            </Pressable>
+          )}
           <Pressable style={s.toggleRow} onPress={() => set('openSupport', !d.openSupport)}>
             <Switch
               value={d.openSupport}

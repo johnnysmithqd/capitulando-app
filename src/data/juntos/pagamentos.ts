@@ -246,3 +246,40 @@ export interface Aviso {
 }
 export const publicarAviso = (a: Aviso) => delay({ id: String(Date.now()), ...a });
 export const lembrarSemResposta = (clubeId: string) => delay({ clubeId });
+
+// ---------- Conta (Configurações › Assinaturas e Pagamentos)
+
+export interface Assinatura {
+  id: string;
+  clubeId: string;
+  clube: string;
+  plano: string;
+  preco: string;
+  proxima: string; // "renova em 3 out" / "Pix vence em 5 out"
+  forma: FormaPagamento;
+}
+
+export interface Conta {
+  assinaturas: Assinatura[];
+  apoios: { projetoId: string; projeto: string; recompensa: string; status: string }[];
+  cartao: { bandeira: string; final: string; validade: string } | null;
+  historico: { data: string; descricao: string; valor: string }[];
+}
+
+export const getConta = (): Promise<Conta> =>
+  delay({
+    assinaturas: [
+      { id: 'a1', clubeId: 'cortico', clube: 'Clube do Cortiço', plano: 'Cadeira', preco: 'R$ 24 / mês', proxima: 'renova em 3 out', forma: 'cartao' },
+      { id: 'a2', clubeId: 'tercas', clube: 'Machado às Terças', plano: 'Porta aberta', preco: 'grátis', proxima: 'sem cobrança', forma: 'pix' },
+    ],
+    apoios: [{ projetoId: 'quadrinhos', projeto: 'Memórias Póstumas em quadrinhos', recompensa: 'Capa dura assinada', status: 'em trânsito' }],
+    cartao: { bandeira: 'Visa', final: '4821', validade: '08/29' },
+    historico: [
+      { data: '3 set', descricao: 'Clube do Cortiço · Cadeira', valor: 'R$ 24,00' },
+      { data: '19 ago', descricao: 'Memórias Póstumas em quadrinhos · apoio', valor: 'R$ 108,00' },
+      { data: '3 ago', descricao: 'Clube do Cortiço · Cadeira', valor: 'R$ 24,00' },
+    ],
+  });
+
+export const cancelarAssinatura = (assinaturaId: string) => delay({ assinaturaId });
+export const removerCartao = () => delay(true);

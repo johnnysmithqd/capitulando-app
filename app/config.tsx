@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { ChevronLeft, ChevronRight, CreditCard, FolderInput, LifeBuoy, Repeat, ScrollText, Sparkles, Wallet } from 'lucide-react-native';
 import { useEffect, useState, type ReactNode } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Avatar, Card, Divider, Eyebrow, IconButton, T } from '../src/components/ui';
@@ -97,19 +97,19 @@ export default function Config() {
 
         <Eyebrow style={s.section}>A casa</Eyebrow>
         <Card style={s.group}>
-          <Link icon={<Repeat size={20} color={colors.ink} />} label="Assinaturas" value="2 ativas" />
+          <Link icon={<Repeat size={20} color={colors.ink} />} label="Assinaturas" value="2 ativas" onPress={() => router.push('/assinaturas')} />
           <Divider />
-          <Link icon={<CreditCard size={20} color={colors.ink} />} label="Pagamentos" value="Cartão" />
+          <Link icon={<CreditCard size={20} color={colors.ink} />} label="Pagamentos" value="Cartão" onPress={() => router.push({ pathname: '/assinaturas', params: { aba: 'pagamentos' } })} />
           <Divider />
-          <Link icon={<FolderInput size={20} color={colors.ink} />} label="Importar estante" value="Skoob" />
+          <Link icon={<FolderInput size={20} color={colors.ink} />} label="Importar estante" value="Skoob" onPress={() => router.push({ pathname: '/onboarding', params: { passo: '4' } })} />
           <Divider />
-          <Link icon={<Wallet size={20} color={colors.ink} />} label="Recebimentos" value="1 clube" />
+          <Link icon={<Wallet size={20} color={colors.ink} />} label="Recebimentos" value="1 clube" onPress={() => router.push({ pathname: '/painel-clube/[id]', params: { id: 'sarau', aba: 'pagamentos' } })} />
           <Divider />
           <Link icon={<Sparkles size={20} color={colors.ink} />} label="Refazer boas-vindas" onPress={() => router.push('/onboarding')} />
           <Divider />
-          <Link icon={<LifeBuoy size={20} color={colors.ink} />} label="Ajuda" />
+          <Link icon={<LifeBuoy size={20} color={colors.ink} />} label="Ajuda" onPress={() => Linking.openURL('https://capitulando.com/ajuda')} />
           <Divider />
-          <Link icon={<ScrollText size={20} color={colors.ink} />} label="Termos e privacidade" />
+          <Link icon={<ScrollText size={20} color={colors.ink} />} label="Termos e privacidade" onPress={() => Linking.openURL('https://capitulando.com/termos')} />
         </Card>
 
         <Pressable style={s.logout} onPress={sair}>

@@ -1,10 +1,11 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { ChevronLeft, ChevronRight, ContactRound, Info, Lightbulb, Minus, Plus, Upload } from 'lucide-react-native';
 import { useState, type ReactNode } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../src/components/BookCover';
+import { precisaDoAparelho } from '../src/components/menu';
 import { Avatar, Button, Divider, T } from '../src/components/ui';
 import * as api from '../src/data/api';
 import { useApi } from '../src/data/store';
@@ -15,7 +16,8 @@ const TOTAL = 6;
 export default function Onboarding() {
   const insets = useSafeAreaInsets();
   const data = useApi(api.getOnboarding);
-  const [step, setStep] = useState(1);
+  const { passo } = useLocalSearchParams<{ passo?: string }>();
+  const [step, setStep] = useState(Math.min(TOTAL, Math.max(1, Number(passo) || 1)));
   const [genres, setGenres] = useState<string[]>(['Romance', 'Literatura brasileira', 'Não ficção']);
   const [ratings, setRatings] = useState<Record<string, number>>({ torto: 5, casmurro: 5, capitaes: 4 });
   const [follows, setFollows] = useState<string[]>(['camila', 'luiza']);
@@ -84,7 +86,7 @@ export default function Onboarding() {
             ['Sk', 'Skoob', 'exporte o CSV em Configurações › Meus dados'],
             ['Gr', 'Goodreads', 'My Books › Import and export › Export'],
           ].map(([ini, n, d]) => (
-            <Pressable key={n} style={s.import}>
+            <Pressable key={n} style={s.import} onPress={() => precisaDoAparelho(`Importar do ${n}`)}>
               <View style={s.importIcon}>
                 <Text style={type.title}>{ini}</Text>
               </View>
@@ -127,7 +129,7 @@ export default function Onboarding() {
               </View>
             );
           })}
-          <Pressable style={s.person}>
+          <Pressable style={s.person} onPress={() => precisaDoAparelho('Encontrar contatos')}>
             <View style={[s.importIcon, { borderRadius: 22, width: 44, height: 44 }]}>
               <ContactRound size={20} color={colors.ink} />
             </View>

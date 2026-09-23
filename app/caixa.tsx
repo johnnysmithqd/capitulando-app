@@ -168,7 +168,15 @@ function Avisos({ notices, lidos, onRead }: { notices: Notice[]; lidos: string[]
                       ) : null}
                     </View>
                     {n.action ? (
-                      <Pressable style={s.action}>
+                      <Pressable
+                        style={s.action}
+                        onPress={() => {
+                          onRead(n.id);
+                          if (n.action === 'Confirmar presença') router.push({ pathname: '/rsvp', params: { clube: 'cortico' } });
+                          else if (n.action === 'Seguir de volta') router.push('/pessoa/camila');
+                          else router.push({ pathname: '/sala-clube/cortico', params: { aba: 'mural' } });
+                        }}
+                      >
                         <Text style={s.actionText}>{n.action}</Text>
                       </Pressable>
                     ) : null}

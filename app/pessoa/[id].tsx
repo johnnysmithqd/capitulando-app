@@ -1,10 +1,11 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { ChevronLeft, Lock, MessageCircle, MoreHorizontal } from 'lucide-react-native';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { Pressable, ScrollView, Share, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
+import { menu } from '../../src/components/menu';
 import { Avatar, Button, Card, Eyebrow, IconButton, ProgressBar, T } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { useApi } from '../../src/data/store';
@@ -32,7 +33,16 @@ export default function Pessoa() {
           <ChevronLeft size={24} color={colors.ink} />
         </IconButton>
         <Text style={s.handle}>@{p.handle}</Text>
-        <IconButton label="Mais opções">
+        <IconButton
+          label="Mais opções"
+          onPress={() =>
+            menu(`@${p.handle}`, [
+              { label: 'Compartilhar perfil', onPress: () => Share.share({ message: `https://capitulando.com/@${p.handle}` }) },
+              { label: 'Silenciar no feed', onPress: () => router.back() },
+              { label: 'Bloquear', destrutiva: true, onPress: () => router.back() },
+            ])
+          }
+        >
           <MoreHorizontal size={22} color={colors.ink} />
         </IconButton>
       </View>

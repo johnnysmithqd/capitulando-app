@@ -3,6 +3,7 @@ import { Check, GripVertical, X } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
+import { precisaDoAparelho } from '../src/components/menu';
 import { Sheet } from '../src/components/Sheet';
 import { Avatar, Divider, Eyebrow, T } from '../src/components/ui';
 import * as api from '../src/data/api';
@@ -53,7 +54,7 @@ export default function EditarPerfil() {
         {me ? (
           <View style={{ alignItems: 'center', gap: 10, marginVertical: 8 }}>
             <Avatar initials={me.initials} bg={me.avatarBg} fg={me.avatarFg} size={84} />
-            <Pressable style={s.photo}>
+            <Pressable style={s.photo} onPress={() => precisaDoAparelho('Trocar foto')}>
               <Text style={s.photoText}>Trocar foto</Text>
             </Pressable>
           </View>

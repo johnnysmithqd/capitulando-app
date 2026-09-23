@@ -65,7 +65,11 @@ resposta para os tipos de `src/data/types.ts`. Autenticação e token podem fica
 4. **Pagamentos e condutor** (feito): checkout (apoio a projeto e cadeira de clube, cartão ou Pix),
    Meu apoio (rastreio e atualizações), painel do clube (membros, pagamentos, sessões, enquetes),
    painel do projeto (arrecadação, recompensas, envios), nova enquete, avisar o clube / postar
-   atualização, trocar status do livro. Dados em `src/data/juntos/pagamentos.ts`.
+   atualização, trocar status do livro, assinaturas e pagamentos, escolher livro. Dados em
+   `src/data/juntos/pagamentos.ts`.
+
+Ações que dependem de recurso do aparelho (câmera, fotos, arquivos, contatos) mostram um aviso por
+enquanto (`precisaDoAparelho` em `src/components/menu.ts`) e serão ligadas junto com o backend.
 
 ## Gerar APK / AAB (EAS Build)
 

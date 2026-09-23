@@ -188,9 +188,9 @@ export default function Inicio() {
                     <T style={type.small}>{p.sub}</T>
                   </View>
                   {p.kind === 'enquete' ? (
-                    <View style={s.vote}>
+                    <Pressable style={s.vote} onPress={() => router.push({ pathname: '/sala-clube/cortico', params: { aba: 'enquetes' } })}>
                       <Text style={s.voteText}>votar</Text>
-                    </View>
+                    </Pressable>
                   ) : p.kind === 'aviso' ? (
                     <Tag label="AVISO" tone="accent" />
                   ) : (

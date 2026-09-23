@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { BookCover } from '../src/components/BookCover';
+import { precisaDoAparelho } from '../src/components/menu';
 import { Sheet } from '../src/components/Sheet';
 import { Divider, Eyebrow, T } from '../src/components/ui';
 import * as api from '../src/data/api';
@@ -45,7 +46,7 @@ export default function Busca() {
             </Pressable>
           ) : null}
         </View>
-        <Pressable hitSlop={8} accessibilityLabel="Ler código de barras">
+        <Pressable hitSlop={8} accessibilityLabel="Ler código de barras" onPress={() => precisaDoAparelho('Ler código de barras')}>
           <Barcode size={24} color={colors.ink} />
         </Pressable>
       </View>
