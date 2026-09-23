@@ -31,6 +31,7 @@ src/components       componentes reutilizáveis
 src/data/types.ts    modelos de dados
 src/data/mock.ts     dados de exemplo
 src/data/api.ts      <- PONTO DE INTEGRAÇÃO COM O BACKEND
+src/data/juntos/     dados e funções da Fase 3 (reexportados por api.ts)
 src/data/store.tsx   estado das leituras do usuário
 ```
 
@@ -48,7 +49,9 @@ resposta para os tipos de `src/data/types.ts`. Autenticação e token podem fica
 2. **Social e conta** (feito): Descobrir (Seguindo, Para você, Explorar), Onboarding (6 passos),
    perfil de outra pessoa, Editar perfil, Configurações, Caixa (avisos, mensagens, conversa), Lista,
    entrada do diário, filtros da estante e do diário, ordenação.
-3. Juntos: desafios, clubes, projetos, pódio, check-in, Estúdio de cards.
+3. **Juntos** (feito): aba Juntos (desafios, clubes, projetos, leituras coletivas), sala do desafio, check-in,
+   convidar, criar desafio, pódio, página e sala do clube, capítulo, presença, página do projeto, criar clube,
+   criar projeto, Estúdio de cards (conteúdo, exportar).
 4. Apoio, checkout, painéis do condutor.
 
 ## Gerar APK / AAB (EAS Build)

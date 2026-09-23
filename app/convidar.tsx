@@ -9,9 +9,10 @@ import { useApi } from '../src/data/store';
 import { colors, fonts } from '../src/theme';
 
 export default function ConvidarDesafio() {
-  const { desafio: desafioId = 'setembro' } = useLocalSearchParams<{ desafio?: string }>();
+  const { desafio: desafioId = 'setembro', clube } = useLocalSearchParams<{ desafio?: string; clube?: string }>();
   const d = useApi(() => api.getDesafio(desafioId), [desafioId]);
-  const link = d?.link ?? '';
+  // Aberto a partir da sala do clube: mesmo convite, com o link do clube.
+  const link = clube ? `capitulando.com/clube/${clube}` : d?.link ?? '';
 
   const copiar = () => {
     api.inviteToChallenge(desafioId, 'link');
@@ -20,7 +21,7 @@ export default function ConvidarDesafio() {
   };
   const whatsapp = () => {
     api.inviteToChallenge(desafioId, 'whatsapp');
-    Share.share({ message: `Bora ler junto? ${d?.nome ?? ''} no Capitulando: https://${link}` });
+    Share.share({ message: `Bora ler junto? ${clube ? 'Vem pro clube' : d?.nome ?? ''} no Capitulando: https://${link}` });
   };
   const seguindo = () => {
     api.inviteToChallenge(desafioId, 'seguindo');
@@ -32,8 +33,8 @@ export default function ConvidarDesafio() {
     <Sheet showClose={false}>
       <View style={s.head}>
         <View style={{ flex: 1 }}>
-          <Text style={s.titulo}>Chamar para o desafio</Text>
-          <Text style={j.rowSub}>quem entrar pelo link começa do zero hoje</Text>
+          <Text style={s.titulo}>{clube ? 'Chamar para o clube' : 'Chamar para o desafio'}</Text>
+          <Text style={j.rowSub}>{clube ? 'quem entrar pelo link vê a página do clube' : 'quem entrar pelo link começa do zero hoje'}</Text>
         </View>
         <Pressable onPress={() => router.back()} style={j.topBtn} accessibilityLabel="Fechar">
           <X size={22} color={colors.inkSoft} />

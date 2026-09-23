@@ -113,5 +113,6 @@ export type { Reading };
 
 // ---- Juntos (Fase 3)
 export * from './juntos/desafios';
+export * from './juntos/clubes';
 export * from './juntos/criar';
 export * from './juntos/estudio';

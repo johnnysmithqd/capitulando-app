@@ -48,6 +48,10 @@ export default function RootLayout() {
           <Stack.Screen name="estante/[status]" />
           <Stack.Screen name="pessoa/[id]" />
           <Stack.Screen name="lista/[id]" />
+          <Stack.Screen name="clube/[id]" />
+          <Stack.Screen name="sala-clube/[id]" />
+          <Stack.Screen name="capitulo" />
+          <Stack.Screen name="projeto/[id]" />
           <Stack.Screen name="config" />
           <Stack.Screen name="caixa" />
           <Stack.Screen name="desafio/[id]" />
@@ -68,6 +72,7 @@ export default function RootLayout() {
           <Stack.Screen name="filtrar" options={sheet} />
           <Stack.Screen name="filtrar-diario" options={sheet} />
           <Stack.Screen name="ordenar" options={sheet} />
+          <Stack.Screen name="rsvp" options={sheet} />
           <Stack.Screen name="checkin" options={sheet} />
           <Stack.Screen name="convidar" options={sheet} />
           <Stack.Screen name="exportar" options={sheet} />
