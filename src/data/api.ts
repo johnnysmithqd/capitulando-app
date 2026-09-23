@@ -110,3 +110,6 @@ export const saveSettings = (s: Settings) => delay(s);
 export const logout = () => delay(true);
 
 export type { Reading };
+
+// ---- Juntos (Fase 3)
+export * from './juntos/criar';

@@ -50,6 +50,8 @@ export default function RootLayout() {
           <Stack.Screen name="lista/[id]" />
           <Stack.Screen name="config" />
           <Stack.Screen name="caixa" />
+          <Stack.Screen name="criar-clube" />
+          <Stack.Screen name="criar-projeto" />
           <Stack.Screen name="onboarding" options={{ animation: 'fade', gestureEnabled: false }} />
           <Stack.Screen name="registrar" options={sheet} />
           <Stack.Screen name="busca" options={sheet} />
