@@ -196,8 +196,11 @@ const s = StyleSheet.create({
 /** Fita de marcador de página (o glyph do protótipo): retângulo com corte em V embaixo. */
 export function Fita({ width = 12, height = 10, corte = 0.62, color = colors.accent, style }: { width?: number; height?: number; corte?: number; color?: string; style?: StyleProp<ViewStyle> }) {
   return (
-    <Svg width={width} height={height} style={style} pointerEvents="none">
-      <Polygon points={`0,0 ${width},0 ${width},${height} ${width / 2},${height * corte} 0,${height}`} fill={color} />
-    </Svg>
+    // O posicionamento fica numa View: no navegador o <Svg> ignora position absolute.
+    <View style={[{ width, height }, style]} pointerEvents="none">
+      <Svg width={width} height={height}>
+        <Polygon points={`0,0 ${width},0 ${width},${height} ${width / 2},${height * corte} 0,${height}`} fill={color} />
+      </Svg>
+    </View>
   );
 }
