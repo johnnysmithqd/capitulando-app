@@ -4,6 +4,7 @@ import { Home, Newspaper, Plus, User, Users } from 'lucide-react-native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Fita } from '../../src/components/ui';
 import { colors, fonts } from '../../src/theme';
 
 const ICONS = { index: Home, descobrir: Newspaper, juntos: Users, perfil: User } as const;
@@ -25,7 +26,7 @@ function TabBar({ state, navigation }: BottomTabBarProps) {
         accessibilityState={{ selected: on }}
         onPress={() => navigation.navigate(name)}
       >
-        {on ? <View style={s.marker} /> : null}
+        {on ? <Fita width={12} height={14} corte={0.7} style={s.marker} /> : null}
         <Icon size={22} color={on ? colors.ink : colors.muted} strokeWidth={on ? 2.2 : 1.8} />
         <Text style={[s.label, { color: on ? colors.ink : colors.muted }]}>{LABELS[name]}</Text>
       </Pressable>
@@ -65,7 +66,7 @@ const s = StyleSheet.create({
     paddingTop: 8,
   },
   item: { flex: 1, alignItems: 'center', gap: 3 },
-  marker: { position: 'absolute', top: -9, width: 12, height: 14, backgroundColor: colors.accent, borderBottomLeftRadius: 2, borderBottomRightRadius: 2 },
+  marker: { position: 'absolute', top: -8 },
   label: { fontFamily: fonts.sansSemi, fontSize: 12 },
   fab: {
     marginTop: -30,

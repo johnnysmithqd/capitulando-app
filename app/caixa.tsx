@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FlatList, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Avatar, Divider, Eyebrow, IconButton, T } from '../src/components/ui';
+import { Avatar, Divider, Eyebrow, Fita, IconButton, T } from '../src/components/ui';
 import * as api from '../src/data/api';
 import { useApi } from '../src/data/store';
 import type { Message, Notice } from '../src/data/types';
@@ -80,7 +80,11 @@ export default function Caixa() {
                 <Text style={s.countText}>{n}</Text>
               </View>
             ) : null}
-            {aba === k ? <View style={s.marker} /> : null}
+            {aba === k ? (
+              <View style={s.tabLinha}>
+                <Fita style={s.tabFita} />
+              </View>
+            ) : null}
           </Pressable>
         ))}
       </View>
@@ -258,10 +262,11 @@ function Conversa({ id, name, onBack }: { id: string; name: string; onBack: () =
 const s = StyleSheet.create({
   head: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingRight: 20, paddingVertical: 6 },
   link: { fontFamily: fonts.sansSemi, fontSize: 14, color: colors.accentDark },
-  tabs: { flexDirection: 'row', gap: 24, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: colors.accentLine },
+  tabs: { flexDirection: 'row', gap: 24, paddingHorizontal: 20, borderBottomWidth: 1, borderBottomColor: colors.accentLine, zIndex: 3 },
   tab: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 12 },
   tabText: { fontFamily: fonts.sansMedium, fontSize: 15, color: colors.muted },
-  marker: { position: 'absolute', bottom: -8, left: '40%', width: 12, height: 12, backgroundColor: colors.accent, transform: [{ rotate: '45deg' }] },
+  tabLinha: { position: 'absolute', left: 0, right: 0, bottom: -1, height: 1, backgroundColor: colors.accent, alignItems: 'center' },
+  tabFita: { position: 'absolute', top: 1 },
   count: { minWidth: 20, height: 20, borderRadius: 10, paddingHorizontal: 6, backgroundColor: colors.accent, alignItems: 'center', justifyContent: 'center' },
   countText: { fontFamily: fonts.monoBold, fontSize: 11, color: colors.paper },
   scope: { borderRadius: radius.pill, paddingHorizontal: 14, height: 36, justifyContent: 'center', backgroundColor: colors.cream },

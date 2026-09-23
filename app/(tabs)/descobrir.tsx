@@ -20,7 +20,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
 import { ClubCard, ProjectCard } from '../../src/components/cards';
-import { Avatar, Button, Card, Eyebrow, ProgressBar, Stars, T, Tag } from '../../src/components/ui';
+import { Avatar, Button, Card, Eyebrow, Fita, ProgressBar, Stars, T, Tag } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { useApi, useStore } from '../../src/data/store';
 import type { FeedItem } from '../../src/data/types';
@@ -52,7 +52,11 @@ export default function Descobrir() {
         {ABAS.map(([k, label]) => (
           <Pressable key={k} onPress={() => setAba(k)} style={s.tab}>
             <Text style={[s.tabText, aba === k && { color: colors.accent }]}>{label}</Text>
-            {aba === k ? <View style={s.tabMarker} /> : null}
+            {aba === k ? (
+              <View style={s.tabLinha}>
+                <Fita style={s.tabFita} />
+              </View>
+            ) : null}
           </Pressable>
         ))}
       </View>
@@ -397,10 +401,11 @@ const s = StyleSheet.create({
   },
   searchText: { fontFamily: fonts.sans, fontSize: 15, color: colors.faint },
   barcode: { width: 46, height: 46, borderRadius: radius.md, borderWidth: 1, borderColor: colors.accentLine, backgroundColor: colors.paper, alignItems: 'center', justifyContent: 'center' },
-  tabs: { flexDirection: 'row', gap: 22, paddingHorizontal: 20, marginTop: 12, borderBottomWidth: 1, borderBottomColor: colors.accentLine },
+  tabs: { flexDirection: 'row', gap: 22, paddingHorizontal: 20, marginTop: 12, borderBottomWidth: 1, borderBottomColor: colors.accentLine, zIndex: 3 },
   tab: { paddingVertical: 12, alignItems: 'center' },
   tabText: { fontFamily: fonts.sansMedium, fontSize: 15, color: colors.muted },
-  tabMarker: { position: 'absolute', bottom: -8, width: 12, height: 12, backgroundColor: colors.accent, transform: [{ rotate: '45deg' }] },
+  tabLinha: { position: 'absolute', left: 0, right: 0, bottom: -1, height: 1, backgroundColor: colors.accent, alignItems: 'center' },
+  tabFita: { position: 'absolute', top: 1 },
   who: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   clubIcon: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.rose, alignItems: 'center', justifyContent: 'center' },
   stamp: { alignSelf: 'flex-start', borderWidth: 1.5, borderColor: colors.green, borderRadius: 3, paddingHorizontal: 8, paddingVertical: 2, transform: [{ rotate: '-2deg' }] },

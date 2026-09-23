@@ -2,11 +2,10 @@ import { router } from 'expo-router';
 import { ChevronLeft, Share2 } from 'lucide-react-native';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Animated, Pressable, ScrollView, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
-import Svg, { Polygon } from 'react-native-svg';
 
 import type { PessoaClube } from '../data/juntos/clubes';
 import { colors, fonts, radius } from '../theme';
-import { Eyebrow, IconButton } from './ui';
+import { Eyebrow, Fita, IconButton } from './ui';
 
 // Peças comuns das telas de clube e projeto (Fase 3 · Juntos).
 
@@ -112,9 +111,7 @@ export function AbasFita<K extends string>({ itens, value, onChange }: { itens: 
               <Text style={[s.abaText, { color: on ? colors.accent : colors.muted }]}>{it.label}</Text>
               {on ? (
                 <View style={s.abaLinha}>
-                  <Svg width={12} height={10} style={{ position: 'absolute', top: 1, left: '50%', marginLeft: -6 }}>
-                    <Polygon points="0,0 12,0 12,10 6,6.2 0,10" fill={colors.accent} />
-                  </Svg>
+                  <Fita style={{ position: 'absolute', top: 1, left: '50%', marginLeft: -6 }} />
                 </View>
               ) : null}
             </Pressable>

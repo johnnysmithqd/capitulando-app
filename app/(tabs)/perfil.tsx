@@ -20,7 +20,7 @@ import { Pressable, ScrollView, Share, StyleSheet, Text, useWindowDimensions, Vi
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
-import { Avatar, Card, Chip, Divider, Eyebrow, ProgressBar, SectionHeader, Stars, T, Tag } from '../../src/components/ui';
+import { Avatar, Card, Chip, Divider, Eyebrow, Fita, ProgressBar, SectionHeader, Stars, T, Tag } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { filtrarDiario } from '../../src/data/filtros';
 import { diarioFiltroPadrao, useApi, useStore } from '../../src/data/store';
@@ -51,20 +51,25 @@ export default function Perfil() {
       <Header me={me} top={insets.top} />
 
       <View style={s.tabsWrap}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, gap: 20 }}>
+        <View style={s.tabsFundo} />
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, gap: 20, paddingBottom: 11 }}>
           {ABAS.map(([k, label]) => {
             const on = k === aba;
             return (
               <Pressable key={k} onPress={() => setAba(k)} style={s.tab}>
                 <Text style={[s.tabText, on && { color: colors.accent }]}>{label}</Text>
-                {on ? <View style={s.tabMarker} /> : null}
+                {on ? (
+                  <View style={s.tabLinha}>
+                    <Fita style={s.tabFita} />
+                  </View>
+                ) : null}
               </Pressable>
             );
           })}
         </ScrollView>
       </View>
 
-      <View style={{ paddingTop: 18, gap: 20 }}>
+      <View style={{ paddingTop: 7, gap: 20 }}>
         {aba === 'sobre' && <Sobre me={me} p={p} />}
         {aba === 'estantes' && <Estantes p={p} />}
         {aba === 'clubes' && (
@@ -409,10 +414,13 @@ const s = StyleSheet.create({
   links: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginTop: 14, marginBottom: 12 },
   linkChip: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 1, borderColor: colors.line, borderRadius: radius.pill, paddingHorizontal: 12, height: 32, backgroundColor: colors.card },
   linkText: { fontFamily: fonts.sansMedium, fontSize: 12, color: colors.ink },
-  tabsWrap: { backgroundColor: colors.bg, borderBottomWidth: 1, borderBottomColor: colors.accentLine },
+  // a fita pendura 10px abaixo da linha; a faixa de baixo fica transparente para ela aparecer
+  tabsWrap: { zIndex: 3 },
+  tabsFundo: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 11, backgroundColor: colors.bg, borderBottomWidth: 1, borderBottomColor: colors.accentLine },
   tab: { paddingVertical: 12, alignItems: 'center' },
   tabText: { fontFamily: fonts.sansMedium, fontSize: 15, color: colors.muted },
-  tabMarker: { position: 'absolute', bottom: -8, width: 12, height: 12, backgroundColor: colors.accent, transform: [{ rotate: '45deg' }] },
+  tabLinha: { position: 'absolute', left: 0, right: 0, bottom: -1, height: 1, backgroundColor: colors.accent, alignItems: 'center' },
+  tabFita: { position: 'absolute', top: 1 },
   bio: { fontFamily: fonts.serifRegular, fontSize: 16, lineHeight: 25, color: colors.ink },
   shelfGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, paddingHorizontal: 20 },
   shelf: { width: '48.5%', backgroundColor: colors.card, borderRadius: radius.lg, padding: 14 },

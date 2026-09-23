@@ -4,6 +4,7 @@ import { Animated, Pressable, ScrollView, StyleSheet, Text, View, type StyleProp
 
 import type { Desafio } from '../data/juntos/desafios';
 import { colors, fonts, radius } from '../theme';
+import { Fita } from './ui';
 
 /** Abas com a fita do protótipo (linha fina + marcador em forma de fita). */
 export function Abas<K extends string>({
@@ -35,9 +36,7 @@ export function Abas<K extends string>({
               </View>
               {on ? (
                 <View style={s.linha}>
-                  <View style={s.fita}>
-                    <View style={s.fitaCorte} />
-                  </View>
+                  <Fita style={s.fita} />
                 </View>
               ) : null}
             </Pressable>
@@ -178,20 +177,7 @@ const s = StyleSheet.create({
   aba: { paddingTop: 16, paddingBottom: 12, paddingHorizontal: 4 },
   abaText: { fontFamily: fonts.sansSemi, fontSize: 15, lineHeight: 20, color: colors.muted },
   linha: { position: 'absolute', left: 0, right: 0, bottom: -1, height: 1, backgroundColor: colors.accent, alignItems: 'center' },
-  fita: { position: 'absolute', top: 1, width: 12, height: 10, backgroundColor: colors.accent },
-  fitaCorte: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    width: 0,
-    height: 0,
-    borderLeftWidth: 6,
-    borderRightWidth: 6,
-    borderBottomWidth: 4,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: colors.bg,
-  },
+  fita: { position: 'absolute', top: 1 },
   badge: { paddingHorizontal: 6, paddingVertical: 1, borderRadius: radius.pill, backgroundColor: colors.accentSoft },
   badgeText: { fontFamily: fonts.monoBold, fontSize: 11, lineHeight: 14, color: colors.accentDark },
   aviso: {
