@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
 import { Bolinha, DataBox, Numeros, RodapeFixo, Rostos, Secao, TopoFlutuante } from '../../src/components/clube';
-import { emBreve } from '../../src/components/emBreve';
 import { Button, Card, Tag, T } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import type { PlanoClube } from '../../src/data/juntos/clubes';
@@ -136,7 +135,7 @@ export default function Clube() {
         <Button
           label={`Puxar a cadeira · ${atual.nome} · ${atual.preco}`}
           icon={<Armchair size={18} color={colors.paper} />}
-          onPress={() => emBreve('Checkout')}
+          onPress={() => router.push({ pathname: '/checkout', params: { tipo: 'clube', id: c.id, opcao: atual.id } })}
         />
         <Text style={[type.small, { textAlign: 'center' }]}>{c.rodape}</Text>
       </RodapeFixo>

@@ -77,6 +77,13 @@ export default function RootLayout() {
           <Stack.Screen name="convidar" options={sheet} />
           <Stack.Screen name="exportar" options={sheet} />
           <Stack.Screen name="conteudo" options={sheet} />
+          <Stack.Screen name="checkout" options={sheet} />
+          <Stack.Screen name="nova-enquete" options={sheet} />
+          <Stack.Screen name="avisar" options={sheet} />
+          <Stack.Screen name="trocar" options={sheet} />
+          <Stack.Screen name="apoio/[id]" />
+          <Stack.Screen name="painel-clube/[id]" />
+          <Stack.Screen name="painel-projeto/[id]" />
         </Stack>
       </StoreProvider>
     </SafeAreaProvider>

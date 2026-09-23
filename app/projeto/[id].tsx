@@ -6,7 +6,6 @@ import Svg, { Defs, Pattern, Rect } from 'react-native-svg';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Bolinha, CapaMini, DataBox, Numeros, RodapeFixo, Rostos, Secao, TopoFlutuante } from '../../src/components/clube';
-import { emBreve } from '../../src/components/emBreve';
 import { Button, Card, ProgressBar } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { useApi } from '../../src/data/store';
@@ -147,7 +146,7 @@ export default function Projeto() {
       </ScrollView>
 
       <RodapeFixo bottom={insets.bottom}>
-        <Button label={`Apoiar · ${atual.nome} · ${atual.preco}`} onPress={() => emBreve('Apoiar projeto')} />
+        <Button label={`Apoiar · ${atual.nome} · ${atual.preco}`} onPress={() => router.push({ pathname: '/checkout', params: { tipo: 'apoio', id: p.id, opcao: atual.id } })} />
         <Text style={[type.small, { textAlign: 'center' }]}>{p.rodape}</Text>
       </RodapeFixo>
     </View>

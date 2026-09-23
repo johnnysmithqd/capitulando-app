@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 
-/** Aviso para destinos que chegam na Fase 4 (apoio, checkout, painéis do condutor). */
+/** Aviso para ações que ainda não têm tela própria. */
 export function emBreve(what: string) {
-  Alert.alert(what, 'Chega na próxima fase do app.');
+  Alert.alert(what, 'Essa parte ainda está em construção.');
 }

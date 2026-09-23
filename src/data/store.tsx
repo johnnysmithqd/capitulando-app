@@ -32,6 +32,7 @@ interface Store {
   byStatus: (s: ShelfStatus) => { book: Book; reading: Reading }[];
   setPage: (bookId: string, page: number) => void;
   setStatus: (bookId: string, status: ShelfStatus) => void;
+  removeReading: (bookId: string) => void;
 }
 
 const Ctx = createContext<Store | null>(null);
@@ -73,6 +74,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setStatus: (bookId, status) => {
         upsert(bookId, status === 'lido' ? { status, page: (books[bookId] ?? books.memorias).pages } : { status });
         api.setShelfStatus(bookId, status);
+      },
+      removeReading: (bookId) => {
+        setReadings((rs) => rs.filter((r) => r.bookId !== bookId));
+        api.removeFromShelves(bookId);
       },
     }),
     [readings, upsert, estanteFiltro, diarioFiltro],

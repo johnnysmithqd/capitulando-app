@@ -5,7 +5,6 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
-import { emBreve } from '../../src/components/emBreve';
 import { Abas, LinhaTracejada, fmt, juntosStyles as j, minhasPaginas } from '../../src/components/juntos';
 import * as api from '../../src/data/api';
 import type { DesafioCard, ItemJuntos } from '../../src/data/juntos/desafios';
@@ -73,7 +72,7 @@ export default function Juntos() {
             </Grupo>
             <Grupo titulo={`Conduzo · ${data.clubes.conduzo.length}`}>
               {data.clubes.conduzo.map((c) => (
-                <LinhaClube key={c.id} c={c} onPress={() => emBreve('Painel do clube')} />
+                <LinhaClube key={c.id} c={c} onPress={() => router.push(`/painel-clube/${c.id}`)} />
               ))}
             </Grupo>
             <LinhaTracejada
@@ -91,7 +90,7 @@ export default function Juntos() {
           <View style={{ gap: 18 }}>
             <Grupo titulo={`Participo · ${data.projetos.participo.length}`}>
               {data.projetos.participo.map((p) => (
-                <Pressable key={p.id} onPress={() => router.push(`/projeto/${p.id}`)} style={[j.card, { padding: 14, gap: 10 }]}>
+                <Pressable key={p.id} onPress={() => router.push(`/apoio/${p.id}`)} style={[j.card, { padding: 14, gap: 10 }]}>
                   <View style={{ gap: 2 }}>
                     <Text style={j.rowTitle}>{p.nome}</Text>
                     <Text style={s.sub}>{p.linha1}</Text>
@@ -105,7 +104,7 @@ export default function Juntos() {
             </Grupo>
             <Grupo titulo={`Conduzo · ${data.projetos.conduzo.length}`}>
               {data.projetos.conduzo.map((p) => (
-                <Pressable key={p.id} onPress={() => emBreve('Painel do projeto')} style={s.conduzoProjeto}>
+                <Pressable key={p.id} onPress={() => router.push(`/painel-projeto/${p.id}`)} style={s.conduzoProjeto}>
                   <View style={{ flex: 1 }}>
                     <Text style={j.rowTitle}>{p.nome}</Text>
                     <Text style={j.rowSub}>{p.linha1}</Text>

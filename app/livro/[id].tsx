@@ -226,9 +226,7 @@ export default function Livro() {
         <Pressable
           style={s.main}
           onPress={() =>
-            reading?.status === 'lendo'
-              ? router.push({ pathname: '/progresso', params: { id } })
-              : router.push({ pathname: '/status', params: { id } })
+            reading ? router.push({ pathname: '/trocar', params: { id } }) : router.push({ pathname: '/status', params: { id } })
           }
         >
           <BookOpen size={20} color={colors.paper} />

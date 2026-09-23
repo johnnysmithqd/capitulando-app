@@ -5,7 +5,6 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AbasFita, Bolinha, CapaMini, Filtros, TopoTitulo, useAviso } from '../../src/components/clube';
-import { emBreve } from '../../src/components/emBreve';
 import { Card, IconButton } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import type { IconeArco, SalaClube } from '../../src/data/juntos/clubes';
@@ -203,7 +202,7 @@ function Acervo({ sala }: { sala: SalaClube }) {
           ))}
         </View>
       ))}
-      {sala.conduzo ? <BotaoTracejado icon={<Plus size={16} color={colors.inkSoft} />} label="Registrar uma obra" onPress={() => emBreve('Painel do clube')} /> : null}
+      {sala.conduzo ? <BotaoTracejado icon={<Plus size={16} color={colors.inkSoft} />} label="Registrar uma obra" onPress={() => router.push(`/painel-clube/${sala.id}`)} /> : null}
     </View>
   );
 }
@@ -261,7 +260,7 @@ function Enquetes({ sala, avisar }: { sala: SalaClube; avisar: (m: string) => vo
           </Pressable>
         );
       })}
-      {sala.conduzo ? <BotaoTracejado icon={<Plus size={16} color={colors.inkSoft} />} label="Nova enquete" onPress={() => emBreve('Nova enquete')} /> : null}
+      {sala.conduzo ? <BotaoTracejado icon={<Plus size={16} color={colors.inkSoft} />} label="Nova enquete" onPress={() => router.push({ pathname: '/nova-enquete', params: { clube: sala.id } })} /> : null}
     </View>
   );
 }

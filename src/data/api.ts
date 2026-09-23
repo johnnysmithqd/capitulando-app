@@ -14,6 +14,7 @@ export const getBook = (id: string) => delay(mock.books[id] ?? mock.books.memori
 
 export const saveProgress = (bookId: string, page: number) => delay({ bookId, page });
 export const setShelfStatus = (bookId: string, status: ShelfStatus) => delay({ bookId, status });
+export const removeFromShelves = (bookId: string) => delay({ bookId });
 export interface ReadingDetails {
   bookId: string;
   rating?: number;
@@ -116,3 +117,4 @@ export * from './juntos/desafios';
 export * from './juntos/clubes';
 export * from './juntos/criar';
 export * from './juntos/estudio';
+export * from './juntos/pagamentos';

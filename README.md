@@ -14,6 +14,16 @@ npx expo start -c
 
 Escaneie o QR code com o **Expo Go**.
 
+## Ver no navegador (mais rápido para revisar o design)
+
+```powershell
+npx expo install react-dom react-native-web @expo/metro-runtime   # uma vez só
+npm run web
+```
+
+Abre em `http://localhost:8081`. Cada arquivo salvo recarrega sozinho. No Chrome, aperte F12 e ative o
+modo celular (Ctrl+Shift+M) para ver no tamanho de um telefone.
+
 ## Estrutura
 
 ```
@@ -52,7 +62,10 @@ resposta para os tipos de `src/data/types.ts`. Autenticação e token podem fica
 3. **Juntos** (feito): aba Juntos (desafios, clubes, projetos, leituras coletivas), sala do desafio, check-in,
    convidar, criar desafio, pódio, página e sala do clube, capítulo, presença, página do projeto, criar clube,
    criar projeto, Estúdio de cards (conteúdo, exportar).
-4. Apoio, checkout, painéis do condutor.
+4. **Pagamentos e condutor** (feito): checkout (apoio a projeto e cadeira de clube, cartão ou Pix),
+   Meu apoio (rastreio e atualizações), painel do clube (membros, pagamentos, sessões, enquetes),
+   painel do projeto (arrecadação, recompensas, envios), nova enquete, avisar o clube / postar
+   atualização, trocar status do livro. Dados em `src/data/juntos/pagamentos.ts`.
 
 ## Gerar APK / AAB (EAS Build)
 

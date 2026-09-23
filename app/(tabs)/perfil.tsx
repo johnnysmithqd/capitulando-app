@@ -20,7 +20,6 @@ import { Pressable, ScrollView, Share, StyleSheet, Text, useWindowDimensions, Vi
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
-import { emBreve } from '../../src/components/emBreve';
 import { Avatar, Card, Chip, Divider, Eyebrow, ProgressBar, SectionHeader, Stars, T, Tag } from '../../src/components/ui';
 import * as api from '../../src/data/api';
 import { filtrarDiario } from '../../src/data/filtros';
@@ -82,7 +81,7 @@ export default function Perfil() {
               title: c.name,
               sub: c.meta,
               lead: <IconBox bg={c.iconBg} icon={<Armchair size={20} color={c.iconFg} />} />,
-              onPress: () => emBreve('Painel do clube'),
+              onPress: () => router.push(`/painel-clube/${c.id}`),
             }))}
           />
         )}
@@ -93,14 +92,14 @@ export default function Perfil() {
               title: x.title,
               sub: x.sub,
               lead: <BookCover book={{ title: x.title, coverColor: x.coverColor }} width={40} />,
-              onPress: () => router.push(`/projeto/${x.id}`),
+              onPress: () => router.push(`/apoio/${x.id}`),
             }))}
             conduzo={p.projects.conduzo.map((x) => ({
               id: x.id,
               title: x.title,
               sub: x.sub,
               lead: <IconBox bg={colors.lilacSoft} icon={<Megaphone size={20} color={colors.ink} />} />,
-              onPress: () => emBreve('Painel do projeto'),
+              onPress: () => router.push(`/painel-projeto/${x.id}`),
             }))}
           />
         )}
