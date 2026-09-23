@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { CalendarDays, Pencil, Share2, X } from 'lucide-react-native';
-import { Pressable, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BookCover } from '../src/components/BookCover';
 import { Sheet } from '../src/components/Sheet';
@@ -55,7 +55,7 @@ export default function Entrada() {
               variant="outline"
               icon={<Share2 size={16} color={colors.ink} />}
               style={{ flex: 1, height: 46 }}
-              onPress={() => Share.share({ message: `${e.book.title}, de ${e.book.author}: ${e.text ?? ''}` })}
+              onPress={() => router.replace({ pathname: '/estudio', params: { tipo: 'citacao', id: e.book.id } })}
             />
           </View>
           <Pressable style={s.page} onPress={() => router.replace(`/livro/${e.book.id}`)}>

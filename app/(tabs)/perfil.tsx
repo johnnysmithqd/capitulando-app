@@ -364,7 +364,7 @@ function Estatisticas({ p }: { p: Profile }) {
           </View>
         ))}
       </Card>
-      <Pressable style={s.share}>
+      <Pressable style={s.share} onPress={() => router.push({ pathname: '/estudio', params: { tipo: 'retrospectiva' } })}>
         <Share2 size={18} color={colors.ink} />
         <Text style={[type.body, { fontFamily: fonts.sansSemi }]}>Compartilhar retrospectiva do mês</Text>
       </Pressable>

@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import { Share2 } from 'lucide-react-native';
-import { Pressable, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { BookCover } from '../src/components/BookCover';
 import { Sheet } from '../src/components/Sheet';
@@ -18,12 +18,7 @@ export default function Salvo() {
   const pct = Math.round((page / book.pages) * 100);
   const lido = tipo === 'lido' || page >= book.pages;
 
-  const compartilhar = () =>
-    Share.share({
-      message: lido
-        ? `Terminei ${book.title}, de ${book.author}. #Capitulando`
-        : `p. ${page} de ${book.title} (${pct}%). #Capitulando`,
-    });
+  const compartilhar = () => router.replace({ pathname: '/estudio', params: { tipo: lido ? 'terminado' : 'leitura', id } });
 
   return (
     <Sheet showClose={false}>

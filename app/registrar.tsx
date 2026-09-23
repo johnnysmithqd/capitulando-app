@@ -49,7 +49,12 @@ export default function Registrar() {
         <Eyebrow style={{ marginTop: 6 }}>Publicar</Eyebrow>
         <View style={s.grid}>
           <Tile icon={<PencilLine size={20} color={colors.ink} />} title="Escrever um post" sub="texto livre para quem te segue" />
-          <Tile icon={<Quote size={20} color={colors.ink} />} title="Salvar uma citação" sub="vira card no Estúdio" />
+          <Tile
+            icon={<Quote size={20} color={colors.ink} />}
+            title="Salvar uma citação"
+            sub="vira card no Estúdio"
+            onPress={() => router.replace({ pathname: '/estudio', params: { tipo: 'citacao', id: atual?.id ?? 'memorias' } })}
+          />
           <Tile icon={<NotebookPen size={20} color={colors.ink} />} title="Entrada no diário" sub="só para você, se quiser" />
           <Tile
             icon={<BookCheck size={20} color={colors.ink} />}

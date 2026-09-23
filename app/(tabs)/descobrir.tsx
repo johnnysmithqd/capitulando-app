@@ -15,7 +15,7 @@ import {
   Trophy,
 } from 'lucide-react-native';
 import { useState } from 'react';
-import { Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BookCover } from '../../src/components/BookCover';
@@ -174,10 +174,10 @@ function Post({ item }: { item: FeedItem }) {
             </View>
           </Pressable>
           {item.challenge ? (
-            <View style={s.challenge}>
+            <Pressable style={s.challenge} onPress={() => router.push('/desafio/setembro')}>
               <Trophy size={16} color={colors.accentDark} />
               <Text style={s.challengeText}>{item.challenge}</Text>
-            </View>
+            </Pressable>
           ) : null}
         </>
       )}
@@ -219,7 +219,10 @@ function Post({ item }: { item: FeedItem }) {
           <Bookmark size={20} color={colors.inkSoft} fill={saved ? colors.inkSoft : 'transparent'} />
         </Pressable>
         <View style={{ flex: 1 }} />
-        <Pressable onPress={() => Share.share({ message: `${item.who.name} no Capitulando` })} accessibilityLabel="Compartilhar">
+        <Pressable
+          onPress={() => router.push({ pathname: '/estudio', params: { tipo: item.kind === 'citacao' ? 'citacao' : item.kind === 'terminou' ? 'terminado' : 'leitura', id: item.book.id } })}
+          accessibilityLabel="Compartilhar"
+        >
           <Share2 size={20} color={colors.inkSoft} />
         </Pressable>
       </View>

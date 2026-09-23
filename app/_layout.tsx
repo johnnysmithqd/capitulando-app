@@ -50,8 +50,12 @@ export default function RootLayout() {
           <Stack.Screen name="lista/[id]" />
           <Stack.Screen name="config" />
           <Stack.Screen name="caixa" />
+          <Stack.Screen name="desafio/[id]" />
+          <Stack.Screen name="podio/[id]" />
+          <Stack.Screen name="criar-desafio" />
           <Stack.Screen name="criar-clube" />
           <Stack.Screen name="criar-projeto" />
+          <Stack.Screen name="estudio" />
           <Stack.Screen name="onboarding" options={{ animation: 'fade', gestureEnabled: false }} />
           <Stack.Screen name="registrar" options={sheet} />
           <Stack.Screen name="busca" options={sheet} />
@@ -64,6 +68,10 @@ export default function RootLayout() {
           <Stack.Screen name="filtrar" options={sheet} />
           <Stack.Screen name="filtrar-diario" options={sheet} />
           <Stack.Screen name="ordenar" options={sheet} />
+          <Stack.Screen name="checkin" options={sheet} />
+          <Stack.Screen name="convidar" options={sheet} />
+          <Stack.Screen name="exportar" options={sheet} />
+          <Stack.Screen name="conteudo" options={sheet} />
         </Stack>
       </StoreProvider>
     </SafeAreaProvider>

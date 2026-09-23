@@ -152,7 +152,7 @@ export default function Inicio() {
             <Text style={s.quoteSrc}>
               {home.pageOfTheDay.source} ·{'\n'}você está na p. {store.reading(home.pageOfTheDay.bookId)?.page ?? 0}
             </Text>
-            <Pressable style={s.quoteBtn}>
+            <Pressable style={s.quoteBtn} onPress={() => router.push({ pathname: '/estudio', params: { tipo: 'citacao', id: home.pageOfTheDay.bookId } })}>
               <Text style={s.quoteBtnText}>fazer um card</Text>
             </Pressable>
           </View>
