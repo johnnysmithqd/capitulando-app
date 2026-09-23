@@ -8,7 +8,15 @@
     "android": {
       "package": "com.capitulando.app",
       "versionCode": 1,
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "backgroundColor": "#FAF6EF"
+    },
+    "scheme": "capitulando",
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": false
     }
   }
 }

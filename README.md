@@ -1,20 +1,51 @@
-# Capitulando
+# Capitulando — app Android
 
-App Android em React Native (Expo).
+React Native + Expo (SDK 57) + expo-router. Só a interface, por enquanto: os dados vêm de exemplos locais
+(`src/data/mock.ts`). A referência de design é o protótipo em `docs/prototipo/Prototipo.html`.
 
-## Rodar localmente (Windows)
+## Rodar (Windows)
 
 ```powershell
-cd C:\Users\johnn\Documents
-git clone https://github.com/johnnysmithqd/capitulando-app.git
-cd capitulando-app
-git checkout claude/capitulando-android-app-ha62nn
+cd C:\Users\johnn\Documents\capitulando-app\capitulando-app
+git pull
 npm install
-npx expo install --fix   # alinha as versões com o SDK do Expo
-npx expo start           # abra no celular com o app Expo Go
+npx expo start -c
 ```
 
-## Gerar APK / AAB (EAS Build, na nuvem)
+Escaneie o QR code com o **Expo Go**.
+
+## Estrutura
+
+```
+app/                 telas (cada arquivo é uma rota)
+  (tabs)/            abas: Início, Descobrir, Juntos, Perfil
+  livro/[id].tsx     página do livro
+  estante/[status]   estante (lendo, lido, quero-ler, abandonei)
+  registrar, progresso, detalhes, salvo, status, busca   folhas que sobem de baixo
+src/theme            cores, fontes, raios (tokens do protótipo)
+src/components       componentes reutilizáveis
+src/data/types.ts    modelos de dados
+src/data/mock.ts     dados de exemplo
+src/data/api.ts      <- PONTO DE INTEGRAÇÃO COM O BACKEND
+src/data/store.tsx   estado das leituras do usuário
+```
+
+## Para quem vai conectar o backend (capitulando.com)
+
+As telas **não** importam `mock.ts` diretamente: elas usam apenas as funções de `src/data/api.ts`
+(`getMe`, `getHome`, `getBookDetails`, `searchBooks`, `getProfile`, `saveProgress`, `setShelfStatus`,
+`saveReadingDetails`...). Para integrar, troque o corpo de cada função por uma chamada HTTP e converta a
+resposta para os tipos de `src/data/types.ts`. Autenticação e token podem ficar em um novo `src/data/http.ts`.
+
+## Fases
+
+1. **Leitura pessoal** (feito): Início, Registrar, Anotar páginas, Mais detalhes, Salvo, Status, Busca,
+   Livro, Estante, Perfil (Sobre, Estantes, Clubes, Projetos, Diário, Estatísticas).
+2. Descobrir (feed), onboarding, perfil de outra pessoa, editar perfil, configurações, caixa de avisos.
+3. Juntos: desafios, clubes, projetos, pódio, check-in, Estúdio de cards.
+4. Apoio, checkout, painéis do condutor.
+
+## Gerar APK / AAB (EAS Build)
 
 ```powershell
 npm install -g eas-cli
